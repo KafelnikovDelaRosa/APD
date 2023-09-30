@@ -99,3 +99,11 @@ header ul a {
 .card {
     box-shadow: 0 0.25rem 1.75rem 1.5rem rgba(43, 42, 34, 0.458) !important;
 }
+
+#avatar {
+    height: 280px;
+}
+
+#upload {
+    margin-top: 15px;
+}
