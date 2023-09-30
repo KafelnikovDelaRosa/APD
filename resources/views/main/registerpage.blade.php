@@ -20,9 +20,12 @@
                 <small id="studnumber-error" style="color:red"></small>
             </div>
             <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control name-field"  id="email">
+            </div>
+            <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>
                 <input type="text" class="form-control name-field"  id="firstname">
-                <small id="firstname-error" style="color:red"></small>
             </div>
             <div class="mb-3">
                 <label for="middlename" class="form-label">Middle Name (Optional)</label>
@@ -287,6 +290,7 @@
         function validateFields(fields){
             let result={
                 studentField:(validateStudentNum(fields.studentid)?true:false),
+                emailField:(validateStudentNum(fields.email)?true:false),
                 firstnameField:(validateFirstname(fields.firstname)?true:false),
                 lastnameField:(validateLastname(fields.lastname)?true:false),
                 passwordField:(validatePassword(fields.password)?true:false),
@@ -321,6 +325,7 @@
             e.preventDefault();
             let field = {
               studentid:"",
+              email:"",
               firstname:"",
               middlename:"",
               lastname:"",
@@ -329,6 +334,7 @@
               password:""
             };
             field.studentid = $('#studentid').val();
+            field.email = $('#email').val();
             field.firstname = $('#firstname').val();
             field.middlename = $('#middlename').val();
             field.lastname = $('#lastname').val();

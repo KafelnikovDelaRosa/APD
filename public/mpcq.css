@@ -138,6 +138,10 @@ header ul a {
     cursor: pointer;
 }
 
+.start_btn button:hover {
+    background-color: rgb(200, 154, 0);
+}
+
 .info_box{
     font-family: 'Rubik', sans-serif;
     width: 540px;
