@@ -62,7 +62,7 @@ body {
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
-    min-height:90%;
+    min-height:89%;
 }
 .be-nav{
     position:relative;
@@ -119,47 +119,59 @@ select[id="programming-language"]{
     position:relative;
     display:flex;
     min-height:100%;
+    overflow:hidden;
     justify-content: space-between;
     flex-grow:1;
 }
 .be-content .question{
+    overflow-y:scroll;
+    scroll-behavior: smooth;
     width:49.7%;
+    height:50em;
     padding:2rem;
     color:white;
     background-color:#1a1a1a;
 }
 .be-content .question .content{
     position:relative;
-    min-height:100%;
 }
 .be-content .question .content p{
     text-align:justify;
 }
+
 .be-content .code{
     width:49.7%;
+    height:50em;
+    display:flex;
+    flex-direction:column;
+}
+.be-content .code .code-container{
+    height:35em;
     background-color:#272727;
+    display:flex;
+    overflow-y:scroll;
 }
-.be-content .code p{
-    background-color:#272727;
-}
-.line{
+.be-content .code .code-container ol{
     color:white;
-    margin-left:1rem;
+    list-style-type: none;
+    margin-right:2rem;
 }
-.be-content .code .code-content{
-    height:100%;
-}
-
-.code-content ol{
-   color:white;
-   counter-reset:my-counter;
-}
-input[type="text"]{
-    color:white;
+textarea{
+    position:relative;
     background-color:transparent;
-    width:100%;
     border:none;
+    color:white;
+    overflow:hidden;
+    height:1000em;
 }
-input[type="text"]:focus{
+textarea:focus{
     outline:none;
+}
+.be-content .code .console-container{
+    height:15em;
+    overflow-y: scroll;
+    background-color:black;
+}
+.console-container{
+    color:white;
 }

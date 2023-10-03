@@ -6,6 +6,7 @@ use App\Http\Controllers\MCController;
 use App\Http\Controllers\RegisterAndLoginController;
 use App\Http\Controllers\SuccessController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,7 +46,8 @@ Route::post('/login',[RegisterAndLoginController::class,'login']);
 Route::post('/signOut',[RegisterAndLoginController::class,'signOut']);
 Route::post('/updateProfile',[RegisterAndLoginController::class,'updateProfile']);
 Route::post('/uploadPhoto', [RegisterAndLoginController::class, 'uploadPhoto']);
-
+Route::post('/save-code',[BeController::class,'saveCode']);
+Route::get('/run-code',[BeController::class,'runCode']);
 
 //Routes for admin
 Route::get('/admindashboard', [AdminController::class, 'admindashboard']);
