@@ -6,7 +6,9 @@
     <link rel = "icon" href = "apdicon.png">
     <link rel="stylesheet" href = "admin/admindashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>APD Admin - Secret Office: Admins</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>APD SecretOffice: Admins</title>
 </head>
 <body>
     
@@ -19,7 +21,7 @@
             <i class="fa-solid fa-bars" id = "btn"></i>
         </div>
         <div class="user">
-            <img src = "admin/admins/201910416.jpg" alt="secret-user" class = "user-img">
+            <img src = "{{ Auth::user()->avatar }}" alt="secret-user" class = "user-img">
             <div class="">
                 <p class = "bold">Jeremiah V.</p>
                 <p>Admin</p>

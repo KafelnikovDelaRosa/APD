@@ -53,6 +53,5 @@ Route::get('/adminsubmissions', [AdminController::class, 'adminsubmissions']);
 Route::get('adminnews', [AdminController::class, 'adminnews']);
 Route::get('/adminusers', [AdminController::class, 'adminusers']);
 Route::get('/adminadmins', [AdminController::class, 'adminadmins']);
-Route::post('/post', [AdminController::class, 'post']);
-
 Route::get('display', [AdminController::class, 'display']);
+Route::post('/post', [AdminController::class, 'post']);

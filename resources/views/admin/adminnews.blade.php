@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "icon" href = "apdicon.png">
     <link rel="stylesheet" href="admin/adminnews.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>APD Admin - News</title>
+    <title>APD SecretOffice: News</title>
 </head>
 <body>
 
@@ -22,7 +21,7 @@
             <i class="fa-solid fa-bars" id = "btn"></i>
         </div>
         <div class="user">
-            <img src = "admin/admins/201910416.jpg" alt="secret-user" class = "user-img">
+            <img src = "{{ Auth::user()->avatar }}" alt="secret-user" class = "user-img">
             <div class="">
                 <p class = "bold">Jeremiah V.</p>
                 <p>Admin</p>
@@ -74,15 +73,21 @@
         </ul>
     </div>
 
-    <div class = "container">
-        <form id = "article">
-            <input class = "form-control" type = "text" id = "title" for = "title" placeholder = "Article Title">
-            <input class = "form-control" type = "text" id = "content" for = "content" placeholder = "Article Content">
-            <input class = "form-control" type = "text" id = "author" for = "author" placeholder = "Article Author">
-            <input class = "form-control" type = "file" id = "images" for = "images">
+    <div class="main-content">
+        <div class="container">
+            <form id = "article">
+                <label for = "title" class = "label">Article Title</label>
+                <input class = "form-control" type = "text" id = "title" for = "title" placeholder = "Article Title">
+                <label for = "content" class = "label">Article Content</label>
+                <input class = "form-control" type = "text" id = "content" for = "content" placeholder = "Article Content">
+                <label for = "author" class = "label">Article Author</label>
+                <input class = "form-control" type = "text" id = "author" for = "author" placeholder = "Article Author">
+                <label for = "images" class = "label">Article Images</label>
+                <input class = "form-control" type = "file" id = "images" for = "images">
 
-            <button class="btn btn-warning" type = "submit" id = "post">Post Article</button>
-        </form>
+                <button class="btn btn-warning" type = "submit" id = "post">Post Article</button>
+            </form>
+        </div>
     </div>
 
     <script>

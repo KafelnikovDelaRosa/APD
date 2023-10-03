@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
-* {
-    margin: 0;
+*, *::before, *::after {
     padding: 0;
-    box-sizing: border-box;    
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body {
-    background-color: #eee;
+    font-family: 'Rubik', sans-serif;
+    background-color: #eee !important;
 }
+
 .user-img {
     width: 50px;
     border-radius: 100%;
