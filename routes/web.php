@@ -46,8 +46,6 @@ Route::post('/login',[RegisterAndLoginController::class,'login']);
 Route::post('/signOut',[RegisterAndLoginController::class,'signOut']);
 Route::post('/updateProfile',[RegisterAndLoginController::class,'updateProfile']);
 Route::post('/uploadPhoto', [RegisterAndLoginController::class, 'uploadPhoto']);
-Route::post('/save-code',[BeController::class,'saveCode']);
-Route::get('/run-code',[BeController::class,'runCode']);
 
 //Routes for admin
 Route::get('/admindashboard', [AdminController::class, 'admindashboard']);
