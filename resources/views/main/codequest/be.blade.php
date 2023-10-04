@@ -86,12 +86,8 @@
                 </div>
                 <div class="code">
                     <div class="code-container">
-                        <ol>
-                            <li>
-                                1
-                            </li>
-                        </ol>
-                        <textarea id="written-code-content" style="resize:none" cols=200>
+                        <div class="line-number"></div>
+                        <textarea spellcheck="false" class="code-input" style="resize:none" oninput="updateLineNumbers()">
                         </textarea>
                     </div>
                     <div class="console-container">
@@ -102,78 +98,29 @@
         </div> 
     <script>
 //***********************************Code events and functions here************************************************************************
-        const specialChars=['Enter','Backspace','Shift','Control','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'];
-        const textArea = document.querySelector('#written-code-content');
-        var rowCol={};
-        textArea.addEventListener('keydown', (event) => {
-            if(event.key=="Enter"){
-                newLine();
-                getRowCol();
+        function updateLineNumbers() {
+            const codeInput = document.querySelector('.code-input');
+            const lineNumbers = document.querySelector('.line-number');
+            const lines = codeInput.value.split('\n');
+            console.log(lines);
+            let lineNumberHTML = '';
+            for (let i = 1; i <= lines.length; i++) {
+                lineNumberHTML += i + '<br>';
             }
-            if(event.key=="Backspace"&&rowCol.col==1&&rowCol.row!=1){
-                removeLine();
-                getRowCol();
-            }
-            if(event.key===undefined){
-                event.preventDefault();
-            }
-            else{
-                getRowCol();
-            }
-        });
-        textArea.addEventListener('click',()=>{
-            getRowCol();
-        })
-        textArea.addEventListener('focus', () => {
-            // Trigger the input event to display the initial cursor position
-            textArea.dispatchEvent(new Event('keydown'));
-        });
-        /*textArea.addEventListener('paste',()=>{
-            textArea.dispatchEvent(new Event('input'));
-        })
-        function pasteCodes(row){
-            const ol=document.querySelector(".code-container ol");
-            const pastedList=document.createElement("li");
-            for(let i=0;i<(row+1);i++){
-                ol.append(pastedList);
-            }
-            updateLineOrder();
-        }*/
-        function getRowCol(){
-            const row = textArea.value.substr(0, textArea.selectionStart).split('\n').length;
-            const col = textArea.selectionStart - textArea.value.lastIndexOf('\n', textArea.selectionStart - 1);
-            rowCol['row']=row;
-            rowCol['col']=col;
-            console.log(row,col);
+
+            lineNumbers.innerHTML = lineNumberHTML;
         }
-        function updateLineOrder(){
-            const ol=document.querySelector('.code-container ol');
-            const li=ol.querySelectorAll('li');
-            let liIndex=1;
-            li.forEach((liItem)=>{
-                liItem.textContent=liIndex;
-                liIndex++;
-            })
-        }
-        function newLine(){
-            const ol=document.querySelector(".code-container ol");;
-            const newList=document.createElement("li");
-            ol.append(newList);
-            updateLineOrder();
-        }
-        function removeLine(){
-            const ol=document.querySelector(".code-container ol");
-            const liToRemove=ol.querySelector(`li:last-child`);
-            liToRemove.remove();
-            updateLineOrder();
-        }
+
+        // Initialize line numbers on page load
+        updateLineNumbers();
 //***********************************Console events and functions here*********************************************************************
         const button = document.querySelector('.btn-submit');
         const language= document.querySelector('#programming-language');
         const consoleContainer= document.querySelector('.console-container');
         button.addEventListener('click',(event)=>{
+            const codeInput=document.querySelector('.code-input');
             let fields={};
-            fields['content']=textArea.value;
+            fields['content']=codeInput.value;
             fields['language']=language.value;
             console.log(fields);
             saveTempProgram(fields);           
@@ -181,14 +128,14 @@
         function saveTempProgram(fields){
             $.ajax({
                 type:"POST",
-                url:"/save-code",
-                data:{
+                url:"https://fddd-112-202-225-3.ngrok-free.app/save-code",
+                data:JSON.stringify({
                     'content':fields.content,
                     'language':fields.language
-                },
+                }),
+                contentType:'application/json',
                 success:function(response){
                     if(response.success){
-                        console.log('File temporarily stored Running the Program!');
                         consoleContainer.textContent=response.result;
                         runCode(fields.language);
                     }
@@ -203,19 +150,18 @@
         }
         function runCode(language){
              $.ajax({
-                type:"GET",
-                url:"/run-code",
-                data:{
+                type:"POST",
+                url:"https://fddd-112-202-225-3.ngrok-free.app/run-code",
+                data:JSON.stringify({
                     'language':language
-                },
+                }),
+                contentType:'application/json',
                 success:function(response){
                     if(response.success){
                         consoleContainer.textContent=response.result;
-                        textArea.focus();
                     }
                     else{
                         consoleContainer.textContent=response.error;
-                        textArea.focus();
                     }
                 },
                 error:function(error){

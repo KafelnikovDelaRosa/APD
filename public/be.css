@@ -156,12 +156,19 @@ select[id="programming-language"]{
     list-style-type: none;
     margin-right:2rem;
 }
+.line-number{
+    padding:10px;
+    color: #f0f0f0;
+}
 textarea{
+    color:white;
+    flex-grow:1;
+    padding:10px;
     position:relative;
     background-color:transparent;
-    border:none;
-    color:white;
     overflow:hidden;
+    border:none;
+    font-family:monospace;
     height:1000em;
 }
 textarea:focus{
@@ -174,4 +181,5 @@ textarea:focus{
 }
 .console-container{
     color:white;
+    padding:1em;
 }
