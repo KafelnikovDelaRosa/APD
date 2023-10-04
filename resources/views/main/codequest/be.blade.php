@@ -56,6 +56,7 @@
                                 <option value='js'>Node.js</option>
                                 <option value='php'>Php</option>
                                 <option value='java'>Java</option>
+                                <option value='java'>ruby</option>
                             </select>
                         </li>
                         <li>
