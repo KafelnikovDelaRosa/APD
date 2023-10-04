@@ -41,8 +41,8 @@
     <main>
         <img src="hero/BG1.png" data-speedx = "0.05" data-speedy = "0.05" class = "parallax bg">
         <img src="hero/Guy2.png" data-speedx = "0.18" data-speedy = "0.18" class = "parallax guy2">
-        <img src="hero/Girl1.png" data-speedx = "0.15" data-speedy = "0.005" class = "parallax girl1">
-        <img src="hero/APD.png" data-speedx = "0.118" data-speedy = "0.118" class = "parallax apd">
+        <img src="hero/Girl1.png" data-speedx = "0.18" data-speedy = "0.015" class = "parallax girl1">
+        <img src="hero/APD.png" data-speedx = "0.15" data-speedy = "0.15" class = "parallax apd">
         <img src="hero/Table.png" data-speedx = "0.13" data-speedy = "0.08" class = "parallax table">
         <img src="hero/Guy1.png" data-speedx = "0.18" data-speedy = "0.18" class = "parallax guy1">
     </main>    

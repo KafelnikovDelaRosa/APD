@@ -9,6 +9,7 @@
 body {
     font-family: 'Rubik', sans-serif;
     background: #333;
+    overflow-x: hidden;
 }
 
 .logo {
@@ -117,7 +118,7 @@ main {
     width: 1800px;
     top: calc(50% - 80px);
     left: calc(50% + 100px);
-    transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%)7vgv7;
 }
 
 .guy2lines {
@@ -173,7 +174,7 @@ main {
 .guy1 {
     z-index: 3;
     position: absolute;
-    width: 1300px;
+    width: 1400px;
     top: calc(50% + 85px);
     left: calc(50% + 20px);
     transform: translate(-50%,-50%);
