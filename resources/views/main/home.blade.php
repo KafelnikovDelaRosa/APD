@@ -12,7 +12,7 @@
 
     <header>
         <nav>
-            <img src = "apdicon.png" alt = "APD Logo" class = "logo">
+            <a href = "/home"><img src = "apdicon.png" alt = "APD Logo" class = "logo"></a>
             <ul>
                 <li class = "home">
                     <a href = "/home">Home</a>
@@ -39,14 +39,50 @@
     </header>
 
     <main>
-        <img src="hero/BG1.png" data-speedx = "0.05" data-speedy = "0.05" class = "parallax bg">
-        <img src="hero/Guy2.png" data-speedx = "0.18" data-speedy = "0.18" class = "parallax guy2">
-        <img src="hero/Girl1.png" data-speedx = "0.18" data-speedy = "0.015" class = "parallax girl1">
-        <img src="hero/APD.png" data-speedx = "0.15" data-speedy = "0.15" class = "parallax apd">
-        <img src="hero/Table.png" data-speedx = "0.13" data-speedy = "0.08" class = "parallax table">
-        <img src="hero/Guy1.png" data-speedx = "0.18" data-speedy = "0.18" class = "parallax guy1">
+        <div class="blurload" style="background-image: url(hero/low/BG1-small.png)">
+            <img src="hero/BG1.png" loading="lazy" data-speedx = "0.05" data-speedy = "0.05" class = "parallax bg">
+        </div>
+
+        <div class="blurload" style="background-image: url(hero/low/Guy2-small.png)">
+            <img src="hero/Guy2.png" loading="lazy" data-speedx = "0.18" data-speedy = "0.18" class = "parallax guy2">
+        </div>
+
+        <div class="blurload" style="background-image: url(hero/low/Girl1-small.png)">
+            <img src="hero/Girl1.png" loading="lazy" data-speedx = "0.18" data-speedy = "0.015" class = "parallax girl1">
+        </div>
+
+        <div class="blurload" style="background-image: url(/hero/low/APD-small.png)">
+            <img src="hero/APD.png" loading="lazy" data-speedx = "0.15" data-speedy = "0.15" class = "parallax apd">
+        </div>
+
+        <div class="blurload" style="background-image: url(hero/low/Table-small.png)">
+            <img src="hero/Table.png" loading="lazy" data-speedx = "0.13" data-speedy = "0.08" class = "parallax table">
+        </div>
+
+        <div class="blurload" style="background-image: url(hero/low/Guy1-small.png)">
+            <img src="hero/Guy1.png" loading="lazy" data-speedx = "0.18" data-speedy = "0.18" class = "parallax guy1">
+        </div>
+
     </main>    
 
-    <script src = "home.js"></script>
+    <script src="home.js"></script>
+<script>
+const blurDivs = document.querySelectorAll(".blurload")
+blurDivs.forEach(div => {
+    const img = div .querySelector("img")
+
+    function loaded(){ 
+        div.classList.add("loaded")
+    }
+
+    if(img.complete){
+        loaded() 
+    }   
+    else {
+        img.addEventListener("load", loaded)
+    }
+})
+</script>
+    
 </body>
 </html>
