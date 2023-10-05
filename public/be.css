@@ -178,8 +178,5 @@ textarea:focus{
     height:15em;
     overflow-y: scroll;
     background-color:black;
-}
-.console-container{
     color:white;
-    padding:1em;
 }

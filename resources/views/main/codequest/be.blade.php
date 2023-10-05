@@ -87,8 +87,11 @@
                 <div class="code">
                     <div class="code-container">
                         <div class="line-number"></div>
-                        <textarea spellcheck="false" class="code-input" style="resize:none" oninput="updateLineNumbers()">
-                        </textarea>
+                        <div class="code-content">
+                            <textarea spellcheck="false" class="code-input" style="resize:none" oninput="updateLineNumbers()">
+                            </textarea>
+                            <div>Hello World</div>
+                        </div>
                     </div>
                     <div class="console-container">
 
@@ -99,18 +102,16 @@
     <script>
 //***********************************Code events and functions here************************************************************************
         function updateLineNumbers() {
-            const codeInput = document.querySelector('.code-input');
-            const lineNumbers = document.querySelector('.line-number');
-            const lines = codeInput.value.split('\n');
+            const codeInput=document.querySelector('.code-input');
+            const lineNumbers=document.querySelector('.line-number');
+            const lines=codeInput.value.split('\n');
             console.log(lines);
             let lineNumberHTML = '';
             for (let i = 1; i <= lines.length; i++) {
                 lineNumberHTML += i + '<br>';
             }
-
-            lineNumbers.innerHTML = lineNumberHTML;
+            lineNumbers.innerHTML=lineNumberHTML;
         }
-
         // Initialize line numbers on page load
         updateLineNumbers();
 //***********************************Console events and functions here*********************************************************************
@@ -128,7 +129,7 @@
         function saveTempProgram(fields){
             $.ajax({
                 type:"POST",
-                url:"https://fddd-112-202-225-3.ngrok-free.app/save-code",
+                url:"https://lazy-plum-deer-garb.cyclic.cloud/save-code",
                 data:JSON.stringify({
                     'content':fields.content,
                     'language':fields.language
@@ -137,7 +138,7 @@
                 success:function(response){
                     if(response.success){
                         consoleContainer.textContent=response.result;
-                        runCode(fields.language);
+                        //runCode(fields.language);
                     }
                     else{
                         console.log('File failed to store!');
@@ -151,7 +152,7 @@
         function runCode(language){
              $.ajax({
                 type:"POST",
-                url:"https://fddd-112-202-225-3.ngrok-free.app/run-code",
+                url:"https://lazy-plum-deer-garb.cyclic.cloud/run-code",
                 data:JSON.stringify({
                     'language':language
                 }),
