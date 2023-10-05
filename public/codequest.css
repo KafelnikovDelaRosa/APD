@@ -44,6 +44,10 @@ header ul a {
     font-size: 0.83rem;
 }
 
+header ul a:hover{
+    color: yellow;
+}
+
 .profile a {
     font-size: 1.25rem;
     padding: 0 2rem;

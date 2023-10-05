@@ -13,5 +13,7 @@ window.addEventListener("mousemove", (e) => {
         let speedy = el.dataset.speedy;
 
         el.style.transform = `translateX(calc(-50% + ${-xValue * speedx}px)) translateY(calc(-50% + ${yValue * speedy}px))`;
-    })
+
+
 })
+    })

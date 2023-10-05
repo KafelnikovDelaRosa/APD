@@ -12,7 +12,7 @@
 
     <header>
         <nav>
-            <img src = "apdicon.png" alt = "APD Logo" class = "logo">
+        <a href = "/home"><img src = "apdicon.png" alt = "APD Logo" class = "logo"></a>
             <ul>
                 <li class = "home">
                     <a href = "/home">Home</a>
