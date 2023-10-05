@@ -49,6 +49,9 @@ header ul a {
     font-weight: 300;
     font-size: 0.83rem;
 }
+header ul a:hover{
+    color: yellow;
+}
 
 .profile a {
     font-size: 1.25rem;
@@ -179,3 +182,22 @@ main {
     left: calc(50% + 20px);
     transform: translate(-50%,-50%);
 }
+
+.blurload{
+    background-size: cover;
+    background-position: center;
+}
+
+img{
+    object-position: center;
+    object-fit: cover;
+}
+
+.blurload.loaded > img{
+    opacity: 1;
+}
+.blurload > img{
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
