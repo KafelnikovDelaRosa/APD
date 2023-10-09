@@ -26,18 +26,23 @@ class RegisterAndLoginController extends Controller
     {
         $credentials=$request->validate([
             'studentid'=>['required'],
-            'password'=>['required']
+            'password'=>['required'],
         ]);
+        if(Auth::guard('admins')->attempt($credentials)){
+            $admin=Auth::guard('admins')->user();
+            $request->session()->put('success',true);
+            return response()->json([
+                "success"=>true,
+                "role"=>"admin"
+            ]);
+        }
         if(Auth::attempt($credentials)){
 
             $user = Auth::user(); // Get the authenticated user
-
             // Store user information in the session
             $request->session()->put('success',true);
-            $request->session()->put('studentid', $user->studentid);
             return response()->json([
-                "success"=>true,
-                "message"=>$user
+                "success"=>true
             ]);
         }
         return response()->json(["success"=>false]); 
