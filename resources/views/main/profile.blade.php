@@ -11,7 +11,11 @@
     <title>APD - Home</title>
 </head>
 <body>
-
+    @if(!session('success')||empty(session('success')))
+        <script>
+            window.location.href="/loginpage";
+        </script>
+    @endif
     <header>
         <nav>
             <img src = "apdicon.png" alt = "APD Logo" class = "logo">
@@ -39,7 +43,6 @@
             </ul>
         </nav>
     </header>
-    
     <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
     <div class="row">
@@ -47,7 +50,7 @@
             <div class="card mb-4 mb-xl-0">
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
-                    <img class="img-account-profile rounded-circle mb-2" src="{{ Auth::user()->avatar }}" alt="" id = "avatar">
+                    <img class="img-account-profile rounded-circle mb-2" src="{{ Auth::user()->avatar??'Avatar not set'}}" alt="" id = "avatar">
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <input id = "uploadAvatar" type = "file" class = "form-control" name = "avatar">
                     <button class="btn btn-warning" type="button" id = "upload">Upload new image</button>
@@ -62,35 +65,35 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="studentid">Student Number</label>
-                                <input class="form-control" for="studentid" id="studentid" type="text" placeholder="Enter your Student Number" value="{{ Auth::user()->studentid }}" disabled>
+                                <input class="form-control" for="studentid" id="studentid" type="text" placeholder="Enter your Student Number" value="{{ Auth::user()->studentid??'Student not set'}}" disabled>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="email">Email</label>
-                                <input class="form-control" for="email" id="email" type="text" placeholder="Enter your Email" value="{{ Auth::user()->email }}">
+                                <input class="form-control" for="email" id="email" type="text" placeholder="Enter your Email" value="{{ Auth::user()->email??'Student not set' }}">
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">                
                             <div class="col-md-4">
                                 <label class="small mb-1" for="inputFirstName">First Name</label>
-                                <input class="form-control" for="inputFirstName" id="inputFirstName" type="text" placeholder="Enter your First Name" value="{{ Auth::user()->firstname }}" disabled>
+                                <input class="form-control" for="inputFirstName" id="inputFirstName" type="text" placeholder="Enter your First Name" value="{{ Auth::user()->firstname??'Firstname not set' }}" disabled>
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1" for="middlename">Middle Name</label>
-                                <input class="form-control" for="middlename" id="middlename" type="text" placeholder="Enter your Middle Name" value="{{ Auth::user()->middlename }}" disabled>
+                                <input class="form-control" for="middlename" id="middlename" type="text" placeholder="Enter your Middle Name" value="{{ Auth::user()->middlename??'Middlename not set' }}" disabled>
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1" for="lastname">Last Name</label>
-                                <input class="form-control" id="lastname" type="text" placeholder="Enter your Last Name" value="{{ Auth::user()->lastname }}" disabled>
+                                <input class="form-control" id="lastname" type="text" placeholder="Enter your Last Name" value="{{ Auth::user()->lastname??'Lastname not set' }}" disabled>
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="yearlevel">Year Level</label>
-                                <input class="form-control" for="yearlevel" id="yearlevel" type="text" placeholder="Enter your Year Level" value="{{ Auth::user()->yearlevel }}">
+                                <input class="form-control" for="yearlevel" id="yearlevel" type="text" placeholder="Enter your Year Level" value="{{ Auth::user()->yearlevel??'Year level not set' }}">
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="program">Program</label>
-                                <input class="form-control" for="program" id="program" type="text" placeholder="Enter your Program" value="{{ Auth::user()->program }}">
+                                <input class="form-control" for="program" id="program" type="text" placeholder="Enter your Program" value="{{ Auth::user()->program??'Program not set' }}">
                             </div>
                         </div>
                         <button class="btn btn-warning" type="submit" id="saveChangesButton">Save changes</button>

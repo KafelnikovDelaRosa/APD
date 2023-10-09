@@ -8,7 +8,11 @@
         <link rel = "icon" href = "apdicon.png">
     </head>
     <body>
-
+     @if(!session('success'))
+        <script>
+            window.location.href="/loginpage";
+        </script>
+    @endif
     <header>
         <nav>
             <img src = "apdicon.png" alt = "APD Logo" class = "logo">
