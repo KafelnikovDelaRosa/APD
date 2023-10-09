@@ -54,7 +54,13 @@
                 },
                 success:function(response){
                     if(response.success){
-                        window.location.href="/home";
+                        console.log(response.data);
+                        if(response.role==="admin"){
+                            window.location.href="/admindashboard";
+                        }
+                        else{
+                            window.location.href="/home";
+                        }
                     }
                     else{
                         $("#error").text("Incorrect Credentials!");

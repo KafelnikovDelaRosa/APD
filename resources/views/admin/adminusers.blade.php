@@ -11,7 +11,11 @@
     <title>APD SecretOffice: Users</title>
 </head>
 <body>
-    
+    @if(!session('success'))
+        <script>
+            window.location.href="/loginpage";
+        </script>
+    @endif 
     <div class="sidebar">
         <div class="top">
             <div class="logo">
@@ -21,9 +25,9 @@
             <i class="fa-solid fa-bars" id = "btn"></i>
         </div>
         <div class="user">
-            <img src = "{{ Auth::user()->avatar }}" alt="secret-user" class = "user-img">
+            <img src = "{{ Auth::guard('admins')->user()->avatar??'Image not set'}}" alt="secret-user" class = "user-img">
             <div class="">
-                <p class = "bold">Jeremiah V.</p>
+                <p class = "bold">{{Auth::guard('admins')->user()->firstname??'Firstname not set'}}</p>
                 <p>Admin</p>
             </div>
         </div>

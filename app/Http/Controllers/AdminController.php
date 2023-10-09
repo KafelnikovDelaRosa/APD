@@ -55,4 +55,9 @@ class AdminController extends Controller
         $check = $this->create($data);  
         return response()->json(["success"=>true]);
     }
+    public function adminLogout(){
+        Session::flush();
+        Auth::logout();
+        return redirect('/loginpage');
+    }
 }
