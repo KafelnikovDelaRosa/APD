@@ -123,7 +123,7 @@ select[id="programming-language"]{
     justify-content: space-between;
     flex-grow:1;
 }
-.be-content .question{
+.question{
     overflow-y:scroll;
     scroll-behavior: smooth;
     width:49.7%;
@@ -132,50 +132,46 @@ select[id="programming-language"]{
     color:white;
     background-color:#1a1a1a;
 }
-.be-content .question .content{
+.question .content{
     position:relative;
 }
-.be-content .question .content p{
+.question .content p{
     text-align:justify;
 }
 
-.be-content .code{
+.code{
+    position:relative;
     width:49.7%;
     height:50em;
     display:flex;
     flex-direction:column;
 }
-.be-content .code .code-container{
-    height:35em;
+.code .code-container{
+    height:75%;
     background-color:#272727;
     display:flex;
     overflow-y:scroll;
 }
-.be-content .code .code-container ol{
-    color:white;
-    list-style-type: none;
-    margin-right:2rem;
-}
-.line-number{
+.code .code-container .line-number{
     padding:10px;
-    color: #f0f0f0;
-}
-textarea{
     color:white;
-    flex-grow:1;
+}
+.code .code-container .code-content{
     padding:10px;
-    position:relative;
+    width:100%;
+    height:100%;
+
+}
+.code .code-container .code-content .code-input{
+    color:white;
     background-color:transparent;
-    overflow:hidden;
-    border:none;
-    font-family:monospace;
-    height:1000em;
-}
-textarea:focus{
+    overflow-y:hidden;
     outline:none;
+    border:none;
+    width:100%;
 }
-.be-content .code .console-container{
-    height:15em;
+.code .console-container{
+    height:25%;
     overflow-y: scroll;
     background-color:black;
     color:white;

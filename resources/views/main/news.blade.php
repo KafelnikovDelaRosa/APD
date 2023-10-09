@@ -9,7 +9,11 @@
     <title>APD - News</title>
 </head>
 <body>
-
+    @if(!session('success'))
+        <script>
+            window.location.href="/loginpage";
+        </script>
+    @endif
     <header>
         <nav>
         <a href = "/home"><img src = "apdicon.png" alt = "APD Logo" class = "logo"></a>

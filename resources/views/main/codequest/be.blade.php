@@ -11,6 +11,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     </head>
     <body>
+        @if(!session('success'))
+            <script>
+                window.location.href="/loginpage";
+            </script>
+        @endif
         <header>
             <nav>
                 <img src = "apdicon.png" alt = "APD Logo" class = "logo">
@@ -44,7 +49,7 @@
                     <ul>
                         <li>
                             Description
-                        </li>
+                        </lid>
                     </ul>
                 </div>
                 <div class="right-hand">
@@ -56,7 +61,6 @@
                                 <option value='js'>Node.js</option>
                                 <option value='php'>Php</option>
                                 <option value='java'>Java</option>
-                                <option value='java'>ruby</option>
                             </select>
                         </li>
                         <li>
@@ -89,9 +93,8 @@
                     <div class="code-container">
                         <div class="line-number"></div>
                         <div class="code-content">
-                            <textarea spellcheck="false" class="code-input" style="resize:none" oninput="updateLineNumbers()">
+                            <textarea spellcheck="false" class="code-input" style="resize:none;height:25px;" oninput="updateLineNumbers()">
                             </textarea>
-                            <div>Hello World</div>
                         </div>
                     </div>
                     <div class="console-container">
@@ -102,6 +105,19 @@
         </div> 
     <script>
 //***********************************Code events and functions here************************************************************************
+        const codeEvent=document.querySelector('.code-input');
+        codeEvent.addEventListener('keydown',(event)=>{
+            const line=updateLineNumbers();
+            console.log(line);
+            if(event.keyCode==13){
+                const codeInputHeight=parseInt(codeEvent.style.height);
+                codeEvent.style.height=codeInputHeight+25+"px";
+            }
+            if(event.keyCode==8&&line.length!=1&&line[line.length-1].trim()===''){
+                const codeInputHeight=parseInt(codeEvent.style.height);
+                codeEvent.style.height=(codeInputHeight)-25+"px";
+            }
+        });
         function updateLineNumbers() {
             const codeInput=document.querySelector('.code-input');
             const lineNumbers=document.querySelector('.line-number');
@@ -112,6 +128,7 @@
                 lineNumberHTML += i + '<br>';
             }
             lineNumbers.innerHTML=lineNumberHTML;
+            return lines;
         }
         // Initialize line numbers on page load
         updateLineNumbers();
@@ -130,7 +147,7 @@
         function saveTempProgram(fields){
             $.ajax({
                 type:"POST",
-                url:"https://lazy-plum-deer-garb.cyclic.cloud/save-code",
+                url:"https://e296-112-202-225-3.ngrok-free.app/save-code",
                 data:JSON.stringify({
                     'content':fields.content,
                     'language':fields.language
@@ -139,7 +156,7 @@
                 success:function(response){
                     if(response.success){
                         consoleContainer.textContent=response.result;
-                        //runCode(fields.language);
+                        runCode(fields.language);
                     }
                     else{
                         console.log('File failed to store!');
@@ -153,13 +170,14 @@
         function runCode(language){
              $.ajax({
                 type:"POST",
-                url:"https://lazy-plum-deer-garb.cyclic.cloud/run-code",
+                url:"https://e296-112-202-225-3.ngrok-free.app/run-code",
                 data:JSON.stringify({
                     'language':language
                 }),
                 contentType:'application/json',
                 success:function(response){
                     if(response.success){
+                        console.log(reponse);
                         consoleContainer.textContent=response.result;
                     }
                     else{

@@ -33,6 +33,7 @@ class RegisterAndLoginController extends Controller
             $user = Auth::user(); // Get the authenticated user
 
             // Store user information in the session
+            $request->session()->put('success',true);
             $request->session()->put('studentid', $user->studentid);
             return response()->json([
                 "success"=>true,
