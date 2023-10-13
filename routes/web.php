@@ -55,6 +55,7 @@ Route::get('adminnews', [AdminController::class, 'adminnews']);
 Route::get('/adminusers', [AdminController::class, 'adminusers']);
 Route::get('/adminadmins', [AdminController::class, 'adminadmins']);
 Route::get('/adminlogout',[AdminController::class,'adminLogout']);
+Route::post('/delete-admin',[AdminController::class,'deleteAdmin']);
 Route::post('/delete-user',[AdminController::class,'deleteUser']);
 Route::get('display', [AdminController::class, 'display']);
 Route::post('/post', [AdminController::class, 'post']);

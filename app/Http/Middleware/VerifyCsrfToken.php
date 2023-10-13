@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
         '/uploadPhoto',
         '/post',
         '/save-code',
-        'delete-user'
+        '/delete-user',
+        '/delete-admin'
     ];
 }

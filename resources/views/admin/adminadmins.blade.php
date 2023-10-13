@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "icon" href = "apdicon.png">
-    <link rel="stylesheet" href = "admin/admindashboard.css">
+    <link rel="stylesheet" href = "admin/adminusers.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -87,6 +87,38 @@
     <div class="main-content">
         <h1>Admins</h1>
         <div class="container">
+            @if(!empty($admins))
+                <section class="table_body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Student ID</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($admins as $admin)
+                        <tr>
+                            <td><img id = "avatar" src = "{{ $admin->avatar}}"></td>
+                            <td>{{$admin->studentid}}</td>
+                            <td>{{ $admin->firstname}}</td>
+                            <td>{{ $admin->middlename}}</td>
+                            <td>{{ $admin->lastname}}</td>
+                            <td><button onclick="promptDeleteUser({{$admin->studentid}})">Delete</button></td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </section>
+            @else
+                <section class="table_body" style="background-color:transparent">
+                    Admin table is empty!
+                </section>
+            @endif
         </div>
     </div>
 
@@ -97,6 +129,43 @@
 
         btn.onclick = function () {
             sidebar.classList.toggle('active');
+        }
+         function promptDeleteUser(studentId){
+            Swal.fire({
+                icon:'question',
+                title: `Are you sure you want to remove student no ${studentId}'s entries?`,
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon:'success',
+                        title:`Student Id ${studentId} removed`,
+                    }).then((result)=>{
+                      if(result.isConfirmed){
+                        deleteUser(studentId);
+                      }  
+                    });
+                }
+            })
+        }
+        function deleteUser(studentId){
+            $.ajax({
+                type:'POST',
+                url:'/delete-admin',
+                data:{
+                    'studentid':studentId
+                },
+                success:function(response){
+                    if(response.success){
+                        location.reload();
+                    }
+                },
+                error:function(error){
+                    console.error('Delete user request error ',error);
+                }
+            });
         }
     </script>
 
