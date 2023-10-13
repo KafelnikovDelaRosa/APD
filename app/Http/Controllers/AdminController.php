@@ -38,9 +38,16 @@ class AdminController extends Controller
 
     public function adminadmins()
     {
-        return view('admin/adminadmins');
+        $data=DB::table('admins')->get();
+        return view('admin/adminadmins',['admins'=>$data]);
     }
-
+    public function deleteAdmin(Request $request){
+        $data=$request->all();
+        DB::table('admins')
+        ->where('studentid',$data['studentid'])
+        ->delete();
+        return response()->json(["success"=>true]);
+    }
     public function deleteUser(Request $request){
         $data=$request->all();
         DB::table('users')

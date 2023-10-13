@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         foreach(range(1,5)as $index){
             $yearOfSchool=[2020,2019];
-            $studentId=$faker->randomElement($yearOfSchol).$faker->unique()->numberBetween(10000,99999);
+            $studentId=$faker->randomElement($yearOfSchool).$faker->unique()->numberBetween(10000,99999);
             $yearLevel=mt_rand(1,5);
             $middleName=[null,'Soprano','Hearthwell','Preston','Earnest','Sulivan','Barden','Vinnie','Vernon'];
             $program=['BSITWMA','BSITAGD'];

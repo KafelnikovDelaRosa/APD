@@ -112,7 +112,7 @@
                             <td>{{ $user['middlename']}}</td>
                             <td>{{ $user['lastname']}}</td>
                             <td>{{ is_null($user['points'])?0:$user['points']}}</td>
-                            <td><button onclick="deleteUser({{$user['studentid']}})">Delete</button></td>
+                            <td><button onclick="promptDeleteUser({{$user['studentid']}})">Delete</button></td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -130,6 +130,26 @@
         let sidebar = document.querySelector('.sidebar');
         btn.onclick = function () {
             sidebar.classList.toggle('active');
+        }
+        function promptDeleteUser(studentId){
+            Swal.fire({
+                icon:'question',
+                title: `Are you sure you want to remove student no ${studentId}'s entries?`,
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon:'success',
+                        title:`Student Id ${studentId} removed`,
+                    }).then((result)=>{
+                      if(result.isConfirmed){
+                        deleteUser(studentId);
+                      }  
+                    });
+                }
+            })
         }
         function deleteUser(studentId){
             $.ajax({
