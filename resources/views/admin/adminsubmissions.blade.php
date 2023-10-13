@@ -40,6 +40,13 @@
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
+                <a href = "/adminchallenges">
+                    <i class="fa-solid fa-font-awesome"></i>
+                    <span class="nav-item">Challenges</span>
+                </a>
+                <span class="tooltip">Challenges</span>
+            </li>
+            <li>
                 <a href = "/adminsubmissions">
                     <i class="fa-solid fa-file-code"></i>
                     <span class="nav-item">Submissions</span>
@@ -78,6 +85,7 @@
     </div>
 
     <div class="main-content">
+        <h1>Submissions</h1>
         <div class="container">
         </div>
     </div>

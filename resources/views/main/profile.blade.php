@@ -145,6 +145,7 @@ $(document).ready(function () {
                 if (response.success) {
                     // Display a success message or perform any desired actions
                     console.log("Profile updated successfully");
+                    location.reload();
                 } else {
                     // Handle errors if necessary
                     console.error("Profile update failed");
@@ -177,6 +178,7 @@ $(document).ready(function () {
                 if (response.success) {
                     // Display a success message or perform any desired actions
                     console.log("Photo uploaded successfully");
+                    location.reload();
                 } else {
                     // Handle errors if necessary
                     console.error("Photo upload failed");

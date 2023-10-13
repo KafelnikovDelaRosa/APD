@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
         '/updateProfile',
         '/uploadPhoto',
         '/post',
-        '/save-code'
+        '/save-code',
+        'delete-user'
     ];
 }
