@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>APD SecretOffice: Dashboard</title>
+    <title>APD SecretOffice: Challenges</title>
 </head>
 <body>
     @if(!session('success'))
@@ -85,7 +85,7 @@
     </div>
 
     <div class="main-content">
-        <h1>Dashboard</h1>
+        <h1>Challenges</h1>
         <div class="container">
         </div>
     </div>

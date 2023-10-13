@@ -15,7 +15,9 @@ class AdminController extends Controller
     {
         return view('admin/admindashboard');
     }
-
+    public function adminchallenges(){
+        return view('admin/adminchallenges');
+    }
     public function adminsubmissions()
     {
         return view('admin/adminsubmissions');
@@ -37,6 +39,14 @@ class AdminController extends Controller
     public function adminadmins()
     {
         return view('admin/adminadmins');
+    }
+
+    public function deleteUser(Request $request){
+        $data=$request->all();
+        DB::table('users')
+        ->where('studentid',$data['studentid'])
+        ->delete();
+        return response()->json(["success"=>true]);
     }
 
     public function create(array $data)

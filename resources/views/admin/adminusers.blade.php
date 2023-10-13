@@ -40,6 +40,13 @@
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
+                <a href = "/adminchallenges">
+                    <i class="fa-solid fa-font-awesome"></i>
+                    <span class="nav-item">Challenges</span>
+                </a>
+                <span class="tooltip">Challenges</span>
+            </li>
+            <li>
                 <a href = "/adminsubmissions">
                     <i class="fa-solid fa-file-code"></i>
                     <span class="nav-item">Submissions</span>
@@ -78,45 +85,68 @@
     </div>
 
     <div class="main-content">
+        <h1>Users</h1>
         <div class="container">
-            <section class="table_body">
-                <table>
-                    <thead>
+            @if(!empty($users))
+                <section class="table_body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Student ID</th>
+                                <th>Email</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Points</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($users as $user)
                         <tr>
-                            <th>Avatar</th>
-                            <th>Student ID</th>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Points</th>
+                            <td><img id = "avatar" src = "{{ $user['avatar']}}"></td>
+                            <td>{{ $user['studentid']}}</td>
+                            <td>{{ $user['email']}}</td>
+                            <td>{{ $user['firstname']}}</td>
+                            <td>{{ $user['middlename']}}</td>
+                            <td>{{ $user['lastname']}}</td>
+                            <td>{{ is_null($user['points'])?0:$user['points']}}</td>
+                            <td><button onclick="deleteUser({{$user['studentid']}})">Delete</button></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($users as $user)
-                    <tr>
-                        <td><img id = "avatar" src = "{{ $user['avatar']}}"></td>
-                        <td>{{ $user['studentid']}}</td>
-                        <td>{{ $user['email']}}</td>
-                        <td>{{ $user['firstname']}}</td>
-                        <td>{{ $user['middlename']}}</td>
-                        <td>{{ $user['lastname']}}</td>
-                        <td>{{ $user['points']}}</td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </section>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </section>
+            @else
+                <section class="table_body" style="background-color:transparent">
+                    User table is empty!
+                </section>
+            @endif
         </div>
     </div>
-
-
     <script>
         let btn = document.querySelector('#btn');
         let sidebar = document.querySelector('.sidebar');
-
         btn.onclick = function () {
             sidebar.classList.toggle('active');
+        }
+        function deleteUser(studentId){
+            $.ajax({
+                type:'POST',
+                url:'/delete-user',
+                data:{
+                    'studentid':studentId
+                },
+                success:function(response){
+                    if(response.success){
+                        location.reload();
+                    }
+                },
+                error:function(error){
+                    console.error('Delete user request error ',error);
+                }
+            });
         }
     </script>
 

@@ -49,10 +49,12 @@ Route::post('/uploadPhoto', [RegisterAndLoginController::class, 'uploadPhoto']);
 
 //Routes for admin
 Route::get('/admindashboard', [AdminController::class, 'admindashboard']);
+Route::get('/adminchallenges',[AdminController::class,'adminchallenges']);
 Route::get('/adminsubmissions', [AdminController::class, 'adminsubmissions']);
 Route::get('adminnews', [AdminController::class, 'adminnews']);
 Route::get('/adminusers', [AdminController::class, 'adminusers']);
 Route::get('/adminadmins', [AdminController::class, 'adminadmins']);
 Route::get('/adminlogout',[AdminController::class,'adminLogout']);
+Route::post('/delete-user',[AdminController::class,'deleteUser']);
 Route::get('display', [AdminController::class, 'display']);
 Route::post('/post', [AdminController::class, 'post']);

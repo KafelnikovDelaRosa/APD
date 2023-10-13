@@ -22,10 +22,12 @@
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control name-field"  id="email">
+                <small id="email-error" style="color:red"></small>
             </div>
             <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control name-field"  id="firstname">
+                <input type="text" class="form-control name-field" id="firstname">
+                 <small id="firstname-error" style="color:red"></small>
             </div>
             <div class="mb-3">
                 <label for="middlename" class="form-label">Middle Name (Optional)</label>
@@ -131,6 +133,29 @@
             return true;
         }
 
+//**********************************Email Field Listeners and Functions*******************************
+        const email=document.querySelector("#email");
+        const emailErr=document.querySelector("#email-error");
+        function validateEmail(email){
+            if(email.length==0){
+                emailErr.textContent="Email field is required!";
+                return false;
+            }
+            if(!email.includes('@')){
+                emailErr.textContent="Email addresses requires an '@' symbol";
+                return false;
+            }
+            emailErr.textContent="";
+            return true;
+        }
+        email.addEventListener("input",(event)=>{
+            if(email.value===""){
+                emailErr.textContent="";
+            }
+            else{
+                validateEmail(email.value);
+            }
+        });
 //**********************************Name Field Listeners and Functions********************************
 
         //create listener on name fields
@@ -290,7 +315,7 @@
         function validateFields(fields){
             let result={
                 studentField:(validateStudentNum(fields.studentid)?true:false),
-                emailField:(validateStudentNum(fields.email)?true:false),
+                emailField:(validateEmail(fields.email)?true:false),
                 firstnameField:(validateFirstname(fields.firstname)?true:false),
                 lastnameField:(validateLastname(fields.lastname)?true:false),
                 passwordField:(validatePassword(fields.password)?true:false),
