@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "icon" href = "apdicon.png">
-    <link rel="stylesheet" href = "admin/adminchallenges.css">
+    <link rel = "icon" href = "/apdicon.png">
+    <link rel="stylesheet" href = "/admin/admincodequest.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -85,17 +85,8 @@
     </div>
 
     <div class="main-content">
-        <h1>Challenges</h1>
+        <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/frontend">Frontend</a>/Post</h1>
         <div class="container">
-            <button onclick="window.location.href='/adminchallenges/multiplechoice'">
-                Multiple Choice
-            </button>
-            <button onclick="window.location.href='/adminchallenges/frontend'">
-                Frontend
-            </button>
-            <button onclick="window.location.href='/adminchallenges/backend'">
-                Backend
-            </button>
         </div>
     </div>
 

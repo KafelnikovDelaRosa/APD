@@ -50,6 +50,14 @@ Route::post('/uploadPhoto', [RegisterAndLoginController::class, 'uploadPhoto']);
 //Routes for admin
 Route::get('/admindashboard', [AdminController::class, 'admindashboard']);
 Route::get('/adminchallenges',[AdminController::class,'adminchallenges']);
+Route::get('/adminchallenges/multiplechoice',[AdminController::class,'adminMultipleChoice']);
+Route::get('/adminchallenges/frontend',[AdminController::class,'adminFrontend']);
+Route::get('/adminchallenges/backend',[AdminController::class,'adminBackend']);
+Route::get('/adminchallenges/multiplechoice/post',[AdminController::class,'multipleChoiceForm']);
+Route::get('/adminchallenges/frontend/post',[AdminController::class,'frontEndForm']);
+Route::get('/adminchallenges/backend/post',[AdminController::class,'backEndForm']);
+Route::post('/post-backend',[AdminController::class,'postBackEnd']);
+Route::post('/update-backend-status',[AdminController::class,'updateBackendStatus']);
 Route::get('/adminsubmissions', [AdminController::class, 'adminsubmissions']);
 Route::get('adminnews', [AdminController::class, 'adminnews']);
 Route::get('/adminusers', [AdminController::class, 'adminusers']);
