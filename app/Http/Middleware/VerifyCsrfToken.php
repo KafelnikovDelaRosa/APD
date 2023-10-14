@@ -22,6 +22,8 @@ class VerifyCsrfToken extends Middleware
         '/post',
         '/save-code',
         '/delete-user',
-        '/delete-admin'
+        '/delete-admin',
+        '/post-backend',
+        'update-backend-status'
     ];
 }

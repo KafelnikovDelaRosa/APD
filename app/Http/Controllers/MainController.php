@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
@@ -52,8 +53,11 @@ class MainController extends Controller
 
     public function be()
     {
+        $data=DB::table('backend')
+        ->where('status','active')
+        ->get();
         // Return the "Home" view
-        return view('main/codequest/be');
+        return view('main/codequest/be',['question'=>$data]);
     }
 }
 

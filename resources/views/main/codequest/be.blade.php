@@ -72,21 +72,46 @@
             <div class="be-content">
                 <div class="question">
                     <div class="content">
-                       <h1>FizzBuzz</h1>
-                       <p>
-                            Given a program that would loop from numbers from 1 to 100, create a condition that would print “Fizz” if the number is divisible by 3 and print “Buzz” if the number is divisible by 5. If both numbers are divisible by 3 and 5, print FizzBuzz, otherwise just print the number. You may use any programming language to solve this problem
-                       </p>
-                       <br>
-                       <h4>Expected Output</h4>
-                       <p>
-                         1, 2, Fizz, 4, Buzz, ..., 14, FizzBuzz
-                       </p>
-                       <br>
-                       <h4>Follow Up Question</h4>
-                       <p>
-                            Given a new condition where if the number is divisible by 7 which would print “Comb”, kindly modify the code such that if the number is divisible by 7 and 3 it prints FizzComb or if the number is divisible by 7 and 5 it prints BuzzComb otherwise if both numbers are divisible by 3, 5 and 7 print FizzBuzzComb
-                       </p>
-                       
+                        @php
+                            $colorDiff='';
+                        @endphp
+                        @foreach($question as $content)
+                            @php
+                                $diff=$content->difficulty;
+                                switch($diff){
+                                    case 'easy':
+                                        $colorDiff="green";
+                                        break;
+                                    case 'medium':
+                                        $colorDiff="orange";
+                                        break;
+                                    case 'hard':
+                                        $colorDiff="red";
+                                        break;
+                                }
+                            @endphp
+                            <h1>{{$content->title}}</h1>
+                            <h5 style='color:{{$colorDiff}};text-transform:capitalize'>{{$diff}}</h5>
+                            <br>
+                            <p>{{$content->description}}</p>
+                            <br>
+                            @if(!empty($content->graphics))
+                                <img src="{{$content->graphics}}" alt="image">
+                                <br>
+                            @endif
+                            @if(!empty($content->input))
+                                <h4>Expected Input</h4>
+                                <p>{{$content->input}}</p>
+                                <br>
+                            @endif
+                                <h4>Expected Output</h4>
+                                <p>{{$content->output}}</p>
+                                <br>
+                            @if(!empty($content->followup))
+                                <h4>Follow Up Question</h4>
+                                <p>{{$content->followup}}</p>
+                            @endif 
+                        @endforeach 
                     </div>
                 </div>
                 <div class="code">

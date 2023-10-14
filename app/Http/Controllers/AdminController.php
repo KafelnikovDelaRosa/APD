@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
+
 class AdminController extends Controller
 {
 
@@ -15,20 +16,46 @@ class AdminController extends Controller
     {
         return view('admin/admindashboard');
     }
+
     public function adminchallenges(){
         return view('admin/adminchallenges');
     }
+
+    public function adminMultipleChoice(){
+        return view('admin/codequest/multiplechoice');
+    }
+
+    public function adminFrontEnd(){
+        return view('admin/codequest/frontend');
+    }
+
+    public function multipleChoiceForm(){
+        return view('admin/codequest/postmultiplechoice');
+    }
+
+    public function frontEndForm(){
+        return view('admin/codequest/postfrontend');
+    }
+    
+    public function backEndForm(){
+        return view('admin/codequest/postbackend');
+    }
+
+    public function adminBackEnd(){
+        $data=DB::table('backend')->get();
+        return view('admin/codequest/backend',['challenges'=>$data]);
+    }
+
     public function adminsubmissions()
     {
         return view('admin/adminsubmissions');
     }
-    
 
     public function adminnews()
     {
         return view('admin/adminnews');
     }
-    
+
     public function adminusers()
     {
         //return view('admin/adminusers');
@@ -41,6 +68,7 @@ class AdminController extends Controller
         $data=DB::table('admins')->get();
         return view('admin/adminadmins',['admins'=>$data]);
     }
+
     public function deleteAdmin(Request $request){
         $data=$request->all();
         DB::table('admins')
@@ -48,6 +76,7 @@ class AdminController extends Controller
         ->delete();
         return response()->json(["success"=>true]);
     }
+
     public function deleteUser(Request $request){
         $data=$request->all();
         DB::table('users')
@@ -72,6 +101,40 @@ class AdminController extends Controller
         $check = $this->create($data);  
         return response()->json(["success"=>true]);
     }
+
+    public function postBackEnd(Request $request){
+        $data = $request->all();
+        DB::table('backend')
+        ->insert([
+            'title'=>$data['title'],
+            'description'=>$data['description'],
+            'graphics'=>$data['graphics'],
+            'input'=>$data['input'],
+            'output'=>$data['output'],
+            'followup'=>$data['followup'],
+            'difficulty'=>$data['difficulty'],
+            'points'=>$data['points'],
+            'status'=>$data['status']
+        ]);
+        return response()->json(["success"=>true]);
+    }
+
+    public function updateBackEndStatus(Request $request){
+        $data=$request->all();
+        $prevStatus=$data['status'];
+        $newStatus='';
+        if($prevStatus=='inactive'){
+            $newStatus='active';
+        }
+        else{
+            $newStatus='inactive';
+        }
+        DB::table('backend')
+        ->where('id',$data['id'])
+        ->update(['status'=>$newStatus]);
+        return response()->json(["success"=>true]);
+    }
+
     public function adminLogout(){
         Session::flush();
         Auth::logout();
