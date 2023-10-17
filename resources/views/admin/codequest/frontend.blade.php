@@ -11,7 +11,7 @@
     <title>APD SecretOffice: Challenges (Frontend)</title>
 </head>
 <body>
-    @if(!session('success'))
+    @if(!session('adminsuccess'))
         <script>
             window.location.href="/loginpage";
         </script>
@@ -87,7 +87,76 @@
     <div class="main-content">
         <h1><a href="/adminchallenges">Challenges</a>/Frontend</h1>
         <button onclick="window.location.href='/adminchallenges/frontend/post'">Post Challenge</button>
-        <div class="container">
+        <div class="container-frontend">
+             @if(!empty($challenges))
+                <section class="table_body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Title</th>
+                                <th>Difficulty</th>
+                                <th>Points</th>
+                                <th>Status</th>
+                                <th>Publish</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @php
+                            $colorDiff='';
+                            $no=0;
+                        @endphp
+                        @foreach($challenges as $challenge)
+                            @php
+                                $difficulty=$challenge->difficulty;
+                                switch($difficulty){
+                                    case 'easy':
+                                        $colorDiff='green';
+                                        break;
+                                    case 'medium':
+                                        $colorDiff='orange';
+                                        break;
+                                    case 'hard':
+                                        $colorDiff='red';
+                                        break;
+                                }
+                                $colorStatus=($challenge->status=="inactive")?'red':'green';
+                            @endphp
+                            <tr>
+                                <td>{{ $challenge->id}}</td>
+                                <td>{{ $challenge->title}}</td>
+                                <td style="color:{{$colorDiff}}">{{ $challenge->difficulty}}</td>
+                                <td>{{ $challenge->points}}</td>
+                                <td style="color:{{$colorStatus}}">{{ $challenge->status}}</td>
+                                <td>
+                                    @if($challenge->status=="inactive") 
+                                        <a onclick="activate({{$no+1}},'inactive')">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                        </a>
+                                    @else
+                                        <a onclick="activate({{$no+1}},'active')">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </a>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href=""><i class="fa-solid fa-trash"></i></a>
+                                    <a href=""><i class="fa-solid fa-pen-to-square"></i></a>
+                                </td>
+                            </tr>
+                            @php
+                                $no++;
+                            @endphp
+                        @endforeach
+                        </tbody>
+                    </table>
+                </section>
+            @else
+                <section class="table_body" style="background-color:transparent">
+                    There are no posted backend challenges!
+                </section>
+            @endif
         </div>
     </div>
 

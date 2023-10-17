@@ -11,7 +11,7 @@
     <title>APD SecretOffice: Challenges (Backend)</title>
 </head>
 <body>
-    @if(!session('success'))
+    @if(!session('adminsuccess'))
         <script>
             window.location.href="/loginpage";
         </script>

@@ -26,7 +26,8 @@ class AdminController extends Controller
     }
 
     public function adminFrontEnd(){
-        return view('admin/codequest/frontend');
+        $data=DB::table('frontend')->get();
+        return view('admin/codequest/frontend',['challenges'=>$data]);
     }
 
     public function multipleChoiceForm(){
@@ -102,6 +103,27 @@ class AdminController extends Controller
         return response()->json(["success"=>true]);
     }
 
+    public function postFrontEnd(Request $request){
+        if($request->hasFile('graphics')){
+            $graphics = $request->file('graphics');
+            $graphicsName = $request->input('title') . '.' . $graphics->getClientOriginalExtension();
+            $graphicsPath = 'admin/codeQuestUploads/graphics/' . $graphicsName;
+            $graphics->move('admin/codeQuestUploads/graphics/', $graphicsName);
+            DB::table('frontend')
+            ->insert([
+                'title'=>$request->input('title'),
+                'description'=>$request->input('description'),
+                'graphics'=>$graphicsPath,
+                'difficulty'=>$request->input('difficulty'),
+                'points'=>$request->input('points'),
+                'status'=>$request->input('status')
+            ]);
+            return response()->json([
+                "success" => true,
+            ]);
+        }
+    }
+
     public function postBackEnd(Request $request){
         $data = $request->all();
         DB::table('backend')
@@ -118,6 +140,7 @@ class AdminController extends Controller
         ]);
         return response()->json(["success"=>true]);
     }
+
 
     public function updateBackEndStatus(Request $request){
         $data=$request->all();
@@ -136,8 +159,8 @@ class AdminController extends Controller
     }
 
     public function adminLogout(){
-        Session::flush();
-        Auth::logout();
+        Session::forget('adminsuccess');
+        Auth::guard('admins')->logout();
         return redirect('/loginpage');
     }
 }

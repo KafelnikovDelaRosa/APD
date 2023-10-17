@@ -11,7 +11,7 @@
     <title>APD SecretOffice: Submissions</title>
 </head>
 <body>
-    @if(!session('success'))
+    @if(!session('adminsuccess'))
         <script>
             window.location.href="/loginpage";
         </script>
