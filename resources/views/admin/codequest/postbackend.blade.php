@@ -11,7 +11,7 @@
     <title>APD SecretOffice: Challenges</title>
 </head>
 <body>
-    @if(!session('success'))
+    @if(!session('adminsuccess'))
         <script>
             window.location.href="/loginpage";
         </script>
@@ -186,6 +186,9 @@
                             icon:'success',
                             title:'Question successfully stored',
                             confirmButtonText: 'Confirm',
+                            customClass:{
+                                confirmButton:'change-width-confirm-button',
+                            },
                         }).then((result) =>{
                             if(result.isConfirmed){
                                 window.location.href='/adminchallenges/backend'

@@ -55,6 +55,7 @@ Route::get('/adminchallenges/frontend',[AdminController::class,'adminFrontend'])
 Route::get('/adminchallenges/backend',[AdminController::class,'adminBackend']);
 Route::get('/adminchallenges/multiplechoice/post',[AdminController::class,'multipleChoiceForm']);
 Route::get('/adminchallenges/frontend/post',[AdminController::class,'frontEndForm']);
+Route::post('/post-frontend',[AdminController::class,'postFrontEnd']);
 Route::get('/adminchallenges/backend/post',[AdminController::class,'backEndForm']);
 Route::post('/post-backend',[AdminController::class,'postBackEnd']);
 Route::post('/update-backend-status',[AdminController::class,'updateBackendStatus']);

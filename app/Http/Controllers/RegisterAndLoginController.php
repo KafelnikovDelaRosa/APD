@@ -30,7 +30,7 @@ class RegisterAndLoginController extends Controller
         ]);
         if(Auth::guard('admins')->attempt($credentials)){
             $admin=Auth::guard('admins')->user();
-            $request->session()->put('success',true);
+            $request->session()->put('adminsuccess',true);
             return response()->json([
                 "success"=>true,
                 "role"=>"admin"
@@ -90,7 +90,7 @@ class RegisterAndLoginController extends Controller
     }
 
     public function signOut() {
-        Session::flush();
+        Session::forget('success');
         Auth::logout();
     }
 

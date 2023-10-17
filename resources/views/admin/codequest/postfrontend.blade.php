@@ -11,7 +11,7 @@
     <title>APD SecretOffice: Challenges</title>
 </head>
 <body>
-    @if(!session('success'))
+    @if(!session('adminsuccess'))
         <script>
             window.location.href="/loginpage";
         </script>
@@ -87,17 +87,110 @@
     <div class="main-content">
         <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/frontend">Frontend</a>/Post</h1>
         <div class="container">
+            <form class='form-container'>
+                <label for="title">Title</label>
+                <input type="text" id="title">
+                <small style="color:red" id="title-error"></small>
+                <br>
+                <label for="description">Description</label>
+                <textarea id="description" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem;"></textarea>
+                <small style="color:red" id="description-error"></small>
+                <br>
+                <label for="graphics">Video or Image of Expected Output</label>
+                <input type="file" name="graphics" id="graphics-id">
+                <small style="color:red" id="graphics-error"></small>
+                <br>
+                <label for="difficulty">Difficulty</label>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                <br>
+                <input id='submitForm' style="padding:1rem" type="button" value="Submit">
+            </form>
         </div>
     </div>
-
-
     <script>
         let btn = document.querySelector('#btn');
         let sidebar = document.querySelector('.sidebar');
-
         btn.onclick = function () {
             sidebar.classList.toggle('active');
         }
+        
+        function validateTitle(title){
+            if(title.length==0){
+                $("#title-error").text("Title is required!");
+                return false;
+            }
+            $("#title-error").text("");
+            return true;
+        }
+
+        function validateDescription(description){
+            if(description.length==0){
+                $("#description-error").text("Description is required!");
+                return false;
+            }
+            $("#description-error").text("");
+            return true;
+        }
+
+        function validateGraphics(value){
+            if(value.name==undefined){
+                $("#graphics-error").text("A file is required!");
+                return false;
+            }
+            $("#graphics-error").text("");
+            return true;
+        }
+        function submitForm(formData) {
+            $.ajax({
+                type: "POST",
+                url: "/post-frontend",
+                data: formData, // FormData object
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Question successfully stored',
+                            confirmButtonText: 'Return',
+                            customClass:{
+                                confirmButton:'change-width-confirm-button',
+                            },
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/adminchallenges/frontend';
+                            }
+                        });
+                    }
+                },
+                error: function (error) {
+                    // Handle errors if necessary
+                    console.error("Posting frontend challenge error", error);
+                }
+            });
+        }
+        $('#submitForm').click(()=>{
+            let formData = new FormData();
+            formData.append("title", $('#title').val());
+            formData.append("description", $('#description').val());
+            const graphicsFile = $("#graphics-id")[0].files[0];
+            formData.append("graphics", graphicsFile);
+            formData.append("difficulty", $('#difficulty').val());
+            formData.append("points", formData.get("difficulty") === 'easy' ? 10 : formData.get("difficulty") === 'medium' ? 20 : 30);
+            formData.append("status", 'inactive');
+
+            // Client-side validation
+            if (!validateTitle(formData.get("title")) || !validateDescription(formData.get("description")) || !validateGraphics(graphicsFile)) {
+                return;
+            }
+
+            // Submit the form
+            submitForm(formData);
+        })
     </script>
 
 
