@@ -266,3 +266,6 @@ input[type="text"],select{
     height: 2rem;
     font-size:1rem;
 }
+.change-width-confirm-button{
+    width:50%;
+}

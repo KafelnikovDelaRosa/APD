@@ -42,6 +42,13 @@ class AdminController extends Controller
         return view('admin/codequest/postbackend');
     }
 
+    public function editBackEndForm($id){
+        $data=DB::table('backend')
+        ->where('id',$id)
+        ->get();
+        return view('admin/codequest/editbackend',['values'=>$data,'id'=>$id]);
+    }
+    
     public function adminBackEnd(){
         $data=DB::table('backend')->get();
         return view('admin/codequest/backend',['challenges'=>$data]);
@@ -107,8 +114,8 @@ class AdminController extends Controller
         if($request->hasFile('graphics')){
             $graphics = $request->file('graphics');
             $graphicsName = $request->input('title') . '.' . $graphics->getClientOriginalExtension();
-            $graphicsPath = 'admin/codeQuestUploads/graphics/' . $graphicsName;
-            $graphics->move('admin/codeQuestUploads/graphics/', $graphicsName);
+            $graphicsPath = 'admin/codeQuestUploads/graphics/frontend/' . $graphicsName;
+            $graphics->move('admin/codeQuestUploads/graphics/frontend/', $graphicsName);
             DB::table('frontend')
             ->insert([
                 'title'=>$request->input('title'),
@@ -125,22 +132,38 @@ class AdminController extends Controller
     }
 
     public function postBackEnd(Request $request){
-        $data = $request->all();
+        //check if user has file before inserting graphics into the database
+        if($request->hasFile('graphics')){
+            $graphics=$request->file('graphics');
+            $graphicsName = $request->input('title') . '.' . $graphics->getClientOriginalExtension();
+            $graphicsPath = 'admin/codeQuestUploads/graphics/backend/' . $graphicsName;
+            $graphics->move('admin/codeQuestUploads/graphics/backend/', $graphicsName);
+        }
+        else{
+            $graphics=null;
+        }
         DB::table('backend')
         ->insert([
-            'title'=>$data['title'],
-            'description'=>$data['description'],
-            'graphics'=>$data['graphics'],
-            'input'=>$data['input'],
-            'output'=>$data['output'],
-            'followup'=>$data['followup'],
-            'difficulty'=>$data['difficulty'],
-            'points'=>$data['points'],
-            'status'=>$data['status']
+            'title'=>$request->input("title"),
+            'description'=>$request->input("description"),
+            'graphics'=>($graphics==null)?null:$graphicsPath,
+            'input'=>$request->input("input"),
+            'output'=>$request->input("output"),
+            'followup'=>$request->input("followup"),
+            'difficulty'=>$request->input("difficulty"),
+            'points'=>$request->input("points"),
+            'status'=>$request->input("status")
         ]);
         return response()->json(["success"=>true]);
     }
 
+    public function deleteBackEndPost(Request $request){
+        $data=$request->all();
+        DB::table('backend')
+        ->where('id',$data['id'])
+        ->delete();
+        return response()->json(["success"=>true]);
+    }
 
     public function updateBackEndStatus(Request $request){
         $data=$request->all();
@@ -158,9 +181,33 @@ class AdminController extends Controller
         return response()->json(["success"=>true]);
     }
 
+    public function updateBackEndPost(Request $request){
+         if($request->hasFile('graphics')){
+            $graphics=$request->file('graphics');
+            $graphicsName = $request->input('title') . '.' . $graphics->getClientOriginalExtension();
+            $graphicsPath = 'admin/codeQuestUploads/graphics/backend/' . $graphicsName;
+            $graphics->move('admin/codeQuestUploads/graphics/backend/', $graphicsName);
+        }
+        else{
+            $graphics=null;
+        }
+        DB::table('backend')
+        ->where('id',$request->input('id'))
+        ->update([
+            'title'=>$request->input("title"),
+            'description'=>$request->input("description"),
+            'graphics'=>$graphics,
+            'input'=>$request->input("input"),
+            'output'=>$request->input("output"),
+            'followup'=>$request->input("followup"),
+            'difficulty'=>$request->input("difficulty"),
+            'points'=>$request->input("points"),
+        ]);
+        return response()->json(["success"=>true]);
+    }
+
     public function adminLogout(){
         Session::forget('adminsuccess');
-        Auth::guard('admins')->logout();
         return redirect('/loginpage');
     }
 }

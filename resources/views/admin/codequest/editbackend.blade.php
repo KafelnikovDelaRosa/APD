@@ -85,38 +85,40 @@
     </div>
 
     <div class="main-content">
-        <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/backend">Backend</a>/Post</h1>
+        <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/backend">Backend</a>/Edit</h1>
         <div class="container">
             <form class='form-container'>
-                <label for="title">Title</label>
-                <input type="text" id="title">
-                <small style="color:red" id="title-error"></small>
-                <br>
-                <label for="description">Description</label>
-                <textarea id="description" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem;"></textarea>
-                <small style="color:red" id="description-error"></small>
-                <br>
-                <label for="image">Graphics (Optional)</label>
-                <input type="file" id="image">
-                <br>
-                <label for="input">Expected Input (Optional)</label>
-                <textarea id="input" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem"></textarea>
-                <br>
-                <label for="output">Expected Output</label>
-                <textarea id="output" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem"></textarea>
-                <small style="color:red" id="output-error"></small>
-                <br>
-                <label for="followup">Follow Up Question (Optional)</label>
-                <textarea id="followup" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem"></textarea>
-                <br>
-                <label for="difficulty">Difficulty</label>
-                <select id="difficulty">
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-                <br>
-                <input id='submitForm' style="padding:1rem" type="button" value="Submit">
+                @foreach($values as $value)
+                    <label for="title">Title</label>
+                    <input type="text" id="title" value="{{$value->title}}">
+                    <small style="color:red" id="title-error"></small>
+                    <br>
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem;">{{$value->description}}</textarea>
+                    <small style="color:red" id="description-error"></small>
+                    <br>
+                    <label for="image">Graphics (Optional)</label>
+                    <input type="file" id="image">
+                    <br>
+                    <label for="input">Expected Input (Optional)</label>
+                    <textarea id="input" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem">{{$value->input}}</textarea>
+                    <br>
+                    <label for="output">Expected Output</label>
+                    <textarea id="output" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem">{{$value->output}}</textarea>
+                    <small style="color:red" id="output-error"></small>
+                    <br>
+                    <label for="followup">Follow Up Question (Optional)</label>
+                    <textarea id="followup" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem">{{$value->followup}}</textarea>
+                    <br>
+                    <label for="difficulty">Difficulty</label>
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <br>
+                    <input id='submitForm' style="padding:1rem" type="button" value="Update">
+                @endforeach
             </form>
         </div>
     </div>
@@ -156,7 +158,7 @@
         function submitFormData(formData){
            $.ajax({
                 type:"POST",
-                url:"/post-backend",
+                url:"/update-backend-post",
                 data:formData,
                 processData: false,
                 contentType: false,
@@ -164,8 +166,8 @@
                     if(response.success){
                         Swal.fire({
                             icon:'success',
-                            title:'Question successfully stored',
-                            confirmButtonText: 'Confirm',
+                            title:'Question successfully updated',
+                            confirmButtonText: 'Return',
                             customClass:{
                                 confirmButton:'change-width-confirm-button',
                             },
@@ -177,12 +179,13 @@
                     }
                 },
                 error:function(error){
-                    console.error('Backend posting error ',error)
+                    console.error('Backend editing error ',error)
                 }
            });
         }
         $('#submitForm').click(()=>{
             let formData=new FormData();
+            formData.append("id",{{$id}});
             formData.append("title",$('#title').val());
             formData.append("description",$('#description').val());
             const graphicFile=($('#image')[0].files[0]==undefined)?null:$('#image')[0].files[0];
@@ -195,7 +198,6 @@
             formData.append("difficulty",$('#difficulty').val());
             const points=($('#difficulty').val()==='easy')?10:($('#difficulty').val()==='medium')?20:30;
             formData.append("points",points);
-            formData.append("status","inactive");
             if(!validateTitle(formData.get("title"))||!validateTitle(formData.get("description"))||!validateOutput(formData.get("output"))){
                 return;
             }

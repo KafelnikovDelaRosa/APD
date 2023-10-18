@@ -57,8 +57,11 @@ Route::get('/adminchallenges/multiplechoice/post',[AdminController::class,'multi
 Route::get('/adminchallenges/frontend/post',[AdminController::class,'frontEndForm']);
 Route::post('/post-frontend',[AdminController::class,'postFrontEnd']);
 Route::get('/adminchallenges/backend/post',[AdminController::class,'backEndForm']);
+Route::get('/adminchallenges/backend/editpost/{id}',[AdminController::class,'editBackEndForm']);
 Route::post('/post-backend',[AdminController::class,'postBackEnd']);
+Route::post('/delete-backend-post',[AdminController::class,'deleteBackEndPost']);
 Route::post('/update-backend-status',[AdminController::class,'updateBackendStatus']);
+Route::post('/update-backend-post',[AdminController::class,'updateBackEndPost']);
 Route::get('/adminsubmissions', [AdminController::class, 'adminsubmissions']);
 Route::get('adminnews', [AdminController::class, 'adminnews']);
 Route::get('/adminusers', [AdminController::class, 'adminusers']);
