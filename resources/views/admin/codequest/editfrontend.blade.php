@@ -85,7 +85,7 @@
     </div>
 
     <div class="main-content">
-        <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/backend">Backend</a>/Edit</h1>
+        <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/frontend">Frontend</a>/Edit</h1>
         <div class="container">
             <form class='form-container'>
                 @foreach($values as $value)
@@ -97,18 +97,9 @@
                     <textarea id="description" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem;">{{$value->description}}</textarea>
                     <small style="color:red" id="description-error"></small>
                     <br>
-                    <label for="image">Graphics (Optional)</label>
-                    <input type="file" id="image">
-                    <br>
-                    <label for="input">Expected Input (Optional)</label>
-                    <textarea id="input" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem">{{$value->input}}</textarea>
-                    <br>
-                    <label for="output">Expected Output</label>
-                    <textarea id="output" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem">{{$value->output}}</textarea>
-                    <small style="color:red" id="output-error"></small>
-                    <br>
-                    <label for="followup">Follow Up Question (Optional)</label>
-                    <textarea id="followup" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem">{{$value->followup}}</textarea>
+                    <label for="graphics">Video or Image of Expected Output</label>
+                    <input type="file" name="graphics" id="graphics-id">
+                    <small style="color:red" id="graphics-error"></small>
                     <br>
                     <label for="difficulty">Difficulty</label>
                     <select id="difficulty">
@@ -117,20 +108,18 @@
                         <option value="hard">Hard</option>
                     </select>
                     <br>
-                    <input id='submitForm' style="padding:1rem" type="button" value="Update">
+                    <input id='submitForm' style="padding:1rem" type="button" value="Submit">
                 @endforeach
             </form>
         </div>
     </div>
-
-
     <script>
         let btn = document.querySelector('#btn');
         let sidebar = document.querySelector('.sidebar');
-
         btn.onclick = function () {
             sidebar.classList.toggle('active');
         }
+        
         function validateTitle(title){
             if(title.length==0){
                 $("#title-error").text("Title is required!");
@@ -139,6 +128,7 @@
             $("#title-error").text("");
             return true;
         }
+
         function validateDescription(description){
             if(description.length==0){
                 $("#description-error").text("Description is required!");
@@ -147,60 +137,52 @@
             $("#description-error").text("");
             return true;
         }
-        function validateOutput(output){
-            if(output.length==0){
-                $("#output-error").text("Expected output is required!");
-                return false;
-            }
-            $("#output-error").text("");
-            return true;
-        }
-        function submitFormData(formData){
-           $.ajax({
-                type:"POST",
-                url:"/update-backend-post",
-                data:formData,
+        function submitFormData(formData) {
+            $.ajax({
+                type: "POST",
+                url: "/update-frontend-post",
+                data: formData, // FormData object
                 processData: false,
                 contentType: false,
-                success:function(response){
-                    if(response.success){
+                success: function (response) {
+                    if (response.success) {
                         Swal.fire({
-                            icon:'success',
-                            title:'Question successfully updated',
+                            icon: 'success',
+                            title: 'Question successfully updated',
                             confirmButtonText: 'Return',
                             customClass:{
                                 confirmButton:'change-width-confirm-button',
                             },
-                        }).then((result) =>{
-                            if(result.isConfirmed){
-                                window.location.href='/adminchallenges/backend'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/adminchallenges/frontend';
                             }
                         });
                     }
                 },
-                error:function(error){
-                    console.error('Backend editing error ',error)
+                error: function (error) {
+                    // Handle errors if necessary
+                    console.error("Posting frontend challenge error", error);
                 }
-           });
+            });
         }
         $('#submitForm').click(()=>{
-            let formData=new FormData();
+            let formData = new FormData();
             formData.append("id",{{$idValue}});
-            formData.append("title",$('#title').val());
-            formData.append("description",$('#description').val());
-            const graphicFile=($('#image')[0].files[0]==undefined)?null:$('#image')[0].files[0];
+            formData.append("title", $('#title').val());
+            formData.append("description", $('#description').val());
+            const graphicFile=($('#graphics-id')[0].files[0]==undefined)?null:$('#graphics-id')[0].files[0];
             formData.append("graphics",graphicFile)
-            const inputValue=($('#input').val()==="")?null:$('#input').val();
-            formData.append("input",inputValue);
-            formData.append("output",$('#output').val());
-            const followup=($('#followup').val()==="")?null:$('#followup').val();
-            formData.append("followup",followup);
-            formData.append("difficulty",$('#difficulty').val());
-            const points=($('#difficulty').val()==='easy')?10:($('#difficulty').val()==='medium')?20:30;
-            formData.append("points",points);
-            if(!validateTitle(formData.get("title"))||!validateTitle(formData.get("description"))||!validateOutput(formData.get("output"))){
+            formData.append("difficulty", $('#difficulty').val());
+            formData.append("points", formData.get("difficulty") === 'easy' ? 10 : formData.get("difficulty") === 'medium' ? 20 : 30);
+            formData.append("status", 'inactive');
+
+            // Client-side validation
+            if (!validateTitle(formData.get("title")) || !validateDescription(formData.get("description"))) {
                 return;
             }
+
+            // Submit the form
             submitFormData(formData);
         })
     </script>

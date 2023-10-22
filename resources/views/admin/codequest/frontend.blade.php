@@ -131,18 +131,18 @@
                                 <td style="color:{{$colorStatus}}">{{ $challenge->status}}</td>
                                 <td>
                                     @if($challenge->status=="inactive") 
-                                        <a onclick="activate({{$no+1}},'inactive')">
+                                        <a onclick="activate({{$challenge->id}},'inactive')">
                                             <i class="fa-solid fa-circle-check"></i>
                                         </a>
                                     @else
-                                        <a onclick="activate({{$no+1}},'active')">
+                                        <a onclick="activate({{$challenge->id}},'active')">
                                             <i class="fa-solid fa-circle-xmark"></i>
                                         </a>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href=""><i class="fa-solid fa-trash"></i></a>
-                                    <a href=""><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a onclick="promptDeletePost({{$challenge->id}})"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="/adminchallenges/frontend/editpost/{{$challenge->id}}"><i class="fa-solid fa-pen-to-square"></i></a>
                                 </td>
                             </tr>
                             @php
@@ -154,7 +154,7 @@
                 </section>
             @else
                 <section class="table_body" style="background-color:transparent">
-                    There are no posted backend challenges!
+                    There are no posted frontend challenges!
                 </section>
             @endif
         </div>
@@ -167,6 +167,71 @@
 
         btn.onclick = function () {
             sidebar.classList.toggle('active');
+        }
+        function activate(id,status){
+            $.ajax({
+                type:"POST",
+                url:"/update-frontend-status",
+                data:{
+                    'id':id,
+                    'status':status
+                },
+                success:function(response){
+                    if(response.success){
+                        location.reload();
+                    }
+                    else{
+                        console.log('Failed to update backend status data');
+                    }
+                },
+                error:function(error){
+                    console.error('Update backend status error ',error);
+                }
+            });
+        }
+        function promptDeletePost(id){
+            Swal.fire({
+                icon:'question',
+                title: `Are you sure you want to remove post no ${id} entries?`,
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                customClass:{
+                    confirmButton:'change-width-confirm-button',
+                    cancelButton:'change-width-confirm-button'
+                },
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon:'success',
+                        title:`Post Id ${id} removed`,
+                        customClass:{
+                            confirmButton:'change-width-confirm-button',
+                        },
+                    }).then((result)=>{
+                      if(result.isConfirmed){
+                        deletePost(id);
+                      }  
+                    });
+                }
+            })
+        }
+        function deletePost(id){
+             $.ajax({
+                type:'POST',
+                url:'/delete-frontend-post',
+                data:{
+                    'id':id
+                },
+                success:function(response){
+                    if(response.success){
+                        location.reload();
+                    }
+                },
+                error:function(error){
+                    console.error('Delete post request error ',error);
+                }
+            });
         }
     </script>
 

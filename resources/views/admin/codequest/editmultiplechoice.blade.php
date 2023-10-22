@@ -85,32 +85,34 @@
     </div>
 
     <div class="main-content">
-        <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/multiplechoice">Multiple Choice</a>/Post</h1>
+        <h1><a href="/adminchallenges">Challenges</a>/<a href="/adminchallenges/multiplechoice">Multiple Choice</a>/Edit</h1>
         <div class="container">
             <form class='form-container'>
-                <label for="title">Title</label>
-                <input type="text" id="title">
-                <small style="color:red" id="title-error"></small>
-                <br>
-                <label for="description">Description</label>
-                <textarea id="description" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem;"></textarea>
-                <small style="color:red" id="description-error"></small>
-                <br>
-                Questions
-                <div class="question-container">
-                </div>
-                <br>
-                <small style="color:red" id="questions-error"></small>
-                <input onclick="addQuestion()" style="padding:1rem" id="addBtn" type="button" value="Add Question">
-                <br>
-                <label for="difficulty">Difficulty</label>
-                <select id="difficulty">
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-                <br>
-                <input id='submitForm' style="padding:1rem" type="button" value="Submit">
+                @foreach($quiz as $content)
+                    <label for="title">Title</label>
+                    <input type="text" id="title" value="{{$content->title}}">
+                    <small style="color:red" id="title-error"></small>
+                    <br>
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Write something.." style="height:60px;resize:none;font-size:1rem;">{{$content->description}}</textarea>
+                    <small style="color:red" id="description-error"></small>
+                    <br>
+                    Questions
+                    <div class="question-container">
+                    </div>
+                    <br>
+                    <small style="color:red" id="questions-error"></small>
+                    <input onclick="addQuestion()" style="padding:1rem" id="addBtn" type="button" value="Add Question">
+                    <br>
+                    <label for="difficulty">Difficulty</label>
+                    <select id="difficulty" value="{{$content->difficulty}}">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <br>
+                    <input id='submitForm' style="padding:1rem" type="button" value="Submit">
+                @endforeach
             </form>
         </div>
     </div>
@@ -121,26 +123,22 @@
             sidebar.classList.toggle('active');
         }
         //retrieve quesitions
-        let questions=[{
-            numb:1,
-            question:'',
-            answer:'',
-            options:['','','',''],
-        }];
+        let jsonQuestions=@json($choice);
         function addQuestion(){
-            questions.push({
-                numb:questions.length+1,
+            jsonQuestions.push({
+                numb:jsonQuestions.length+1,
                 question:'',
                 answer:'',
                 options:['','','','']
             });
-            console.log(questions);
+            console.log(jsonQuestions);
             displayQuestion();
         }
-        function initiateQuestion(){
+        function retrieveQuestion(){
             let queryContainer=document.querySelector(".question-container");
             let queryForms=queryContainer.querySelectorAll(".question-form");
-            questions.forEach(question=>{
+            jsonQuestions.forEach(question=>{
+                console.log(question);
                 let tag='';
                 if(question.numb==1){
                     tag=`
@@ -158,6 +156,23 @@
                         </div>
                     `;
                 }
+                else{
+                    tag=`
+                        <div class="question-form" id="${question.numb}">
+                            <p>Question ${question.numb}</p>
+                            <textarea id="Q${question.numb}" oninput="textAreaEvent(${question.numb})" style="height:60px;width:100%;resize:none;font-size:1rem;">${question.question}</textarea>
+                            <p>Choices</p>
+                            <input type="text" style="width:100%;" placeholder="Choice 1" oninput="inputEvent(${question.numb},0)" value="${question.options[0]}" id="Q${question.numb}-C1">
+                            <input type="text" style="width:100%;" placeholder="Choice 2" oninput="inputEvent(${question.numb},1)" value="${question.options[1]}" id="Q${question.numb}-C2">
+                            <input type="text" style="width:100%;" placeholder="Choice 3" oninput="inputEvent(${question.numb},2)" value="${question.options[2]}" id="Q${question.numb}-C3">
+                            <input type="text" style="width:100%;" placeholder="Choice 4" oninput="inputEvent(${question.numb},3)" value="${question.options[3]}" id="Q${question.numb}-C4">
+                            <p>Correct Answer</p>
+                            <input type="text" style="width:100%;" placeholder="Correct Answer" oninput="inputAnswerEvent(${question.numb})" value="${question.answer}" id="CA${question.numb}">
+                            <br><br>
+                            <input onclick="removeQuestion(${question.numb})" style="padding:1rem;width:100%" type="button" value="Remove Question">
+                        </div>
+                    `;
+                }
                 $(queryContainer).append(tag);
             });
         }
@@ -168,7 +183,7 @@
             queryForms.forEach(form=>{
                 form.remove();
             })
-            questions.forEach(question=>{
+            jsonQuestions.forEach(question=>{
                 let tag='';
                 if(question.numb==1){
                     tag=`
@@ -207,35 +222,37 @@
                 index++;
             });
         }
-        initiateQuestion();
+        retrieveQuestion();
         function inputEvent(numb,index){
             const choice=index+1;
             const valueSelector="#Q"+numb+"-C"+choice;
             const valueContent=document.querySelector(valueSelector);
-            questions[numb-1].options[index]=valueContent.value;
+            jsonQuestions[numb-1].options[index]=valueContent.value;
         }
         function textAreaEvent(index){
             const valueSelector="#Q"+index;
-            questions[index-1].question=$(valueSelector).val();
+            jsonQuestions[index-1].question=$(valueSelector).val();
         }
         function inputAnswerEvent(index){
             const valueSelector="#CA"+index;
             const valueContent=document.querySelector(valueSelector);
-            questions[index-1].answer=valueContent.value;
+            jsonQuestions[index-1].answer=valueContent.value;
+            console.log(jsonQuestions);
         }
         function removeQuestion(numb){
             let count=0;
-            questions.forEach(question=>{
-                if(question.numb==numb){
-                    questions.splice(count,1);
+            jsonQuestions.forEach(questions=>{
+                if(questions.numb==numb){
+                    jsonQuestions.splice(count,1);
                 }
                 count++;
             })
             count=1;
-            questions.forEach(question=>{
-                question.numb=count;
+            jsonQuestions.forEach(questions=>{
+                questions.numb=count;
                 count++;
             })
+            console.log(jsonQuestions);
             displayQuestion();
         }
         function validateTitle(title){
@@ -265,7 +282,7 @@
         function submitFormData(formData){
             $.ajax({
                 type:"POST",
-                url:"/post-multiplechoice",
+                url:"/update-multiplechoice-post",
                 data:formData,
                 processData: false,
                 contentType: false,
@@ -273,7 +290,7 @@
                     if(response.success){
                         Swal.fire({
                             icon:'success',
-                            title:'Question successfully stored',
+                            title:'Question successfully updated',
                             confirmButtonText: 'Confirm',
                             customClass:{
                                 confirmButton:'change-width-confirm-button',
@@ -292,12 +309,12 @@
         }
         $('#submitForm').click(()=>{
             let formData= new FormData();
+            formData.append('id',{{$idValue}});
             formData.append('title',$("#title").val());
             formData.append('description',$("#description").val());
-            formData.append('questions',JSON.stringify(questions));
+            formData.append('questions',JSON.stringify(jsonQuestions));
             formData.append('difficulty',$("#difficulty").val());
-            formData.append('points',questions.length);
-            formData.append('status','inactive');
+            formData.append('points',jsonQuestions.length);
             if(!validateTitle(formData.get('title'))||!validateDescription(formData.get('description'))||!validateQuestions(formData.get('questions'))){
                 return;
             }

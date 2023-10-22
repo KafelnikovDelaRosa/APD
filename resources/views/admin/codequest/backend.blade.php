@@ -171,7 +171,7 @@
                 url:"/update-backend-status",
                 data:{
                     'id':id,
-                    'status':status,
+                    'status':status
                 },
                 success:function(response){
                     if(response.success){

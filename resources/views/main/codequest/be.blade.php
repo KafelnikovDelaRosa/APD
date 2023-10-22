@@ -49,7 +49,7 @@
                     <ul>
                         <li>
                             Description
-                        </lid>
+                        </li>
                     </ul>
                 </div>
                 <div class="right-hand">
@@ -99,7 +99,7 @@
                                 <img src="{{$content->graphics}}" alt="image">
                                 <br>
                             @endif
-                            @if(!empty($content->input))
+                            @if(isset($content->input)&&$content->input!='null')
                                 <h4>Expected Input</h4>
                                 <p>{{$content->input}}</p>
                                 <br>
@@ -107,7 +107,7 @@
                                 <h4>Expected Output</h4>
                                 <p>{{$content->output}}</p>
                                 <br>
-                            @if(!empty($content->followup))
+                            @if(isset($content->followup)&&$content->followup!='null')
                                 <h4>Follow Up Question</h4>
                                 <p>{{$content->followup}}</p>
                             @endif 
@@ -138,7 +138,7 @@
                 const codeInputHeight=parseInt(codeEvent.style.height);
                 codeEvent.style.height=codeInputHeight+25+"px";
             }
-            if(event.keyCode==8&&line.length!=1&&line[line.length-1].trim()===''){
+            if(event.keyCode==8&&line.length!=1&&line[line.length-1]===''){
                 const codeInputHeight=parseInt(codeEvent.style.height);
                 codeEvent.style.height=(codeInputHeight)-25+"px";
             }

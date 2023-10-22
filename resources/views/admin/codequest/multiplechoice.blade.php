@@ -87,7 +87,76 @@
     <div class="main-content">
         <h1><a href="/adminchallenges">Challenges</a>/Multiple Choice</h1>
         <button onclick="window.location.href='/adminchallenges/multiplechoice/post'">Post Challenge</button>
-        <div class="container">
+        <div class="container-multiplechoice">
+            @if(!empty($quiz))
+                <section class="table_body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Difficulty</th>
+                                <th>Points</th>
+                                <th>Status</th>
+                                <th>Publish</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @php
+                            $colorDiff='';
+                            $no=0;
+                        @endphp
+                        @foreach($quiz as $content)
+                            @php
+                                $difficulty=$content->difficulty;
+                                switch($difficulty){
+                                    case 'easy':
+                                        $colorDiff='green';
+                                        break;
+                                    case 'medium':
+                                        $colorDiff='orange';
+                                        break;
+                                    case 'hard':
+                                        $colorDiff='red';
+                                        break;
+                                }
+                                $colorStatus=($content->status=="inactive")?'red':'green';
+                            @endphp
+                            <tr>
+                                <td>{{ $content->id}}</td>
+                                <td>{{ $content->title}}</td>
+                                <td style="color:{{$colorDiff}}">{{ $content->difficulty}}</td>
+                                <td>{{ $content->points}}</td>
+                                <td style="color:{{$colorStatus}}">{{ $content->status}}</td>
+                                <td>
+                                    @if($content->status=="inactive") 
+                                        <a onclick="activate({{$content->id}},'inactive')">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                        </a>
+                                    @else
+                                        <a onclick="activate({{$content->id}},'active')">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </a>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a onclick="promptDeletePost({{$content->id}})"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="/adminchallenges/multiplechoice/editpost/{{$content->id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                </td>
+                            </tr>
+                            @php
+                                $no++;
+                            @endphp
+                        @endforeach
+                        </tbody>
+                    </table>
+                </section>
+            @else
+                <section class="table_body" style="background-color:transparent">
+                    There are no posted multiple choice challenges!
+                </section>
+            @endif
         </div>
     </div>
 
@@ -95,9 +164,73 @@
     <script>
         let btn = document.querySelector('#btn');
         let sidebar = document.querySelector('.sidebar');
-
         btn.onclick = function () {
             sidebar.classList.toggle('active');
+        }
+        function activate(id,status){
+            $.ajax({
+                type:"POST",
+                url:"/update-multiplechoice-status",
+                data:{
+                    'id':id,
+                    'status':status
+                },
+                success:function(response){
+                    if(response.success){
+                        location.reload();
+                    }
+                    else{
+                        console.log('Failed to update multiplechoice status data');
+                    }
+                },
+                error:function(error){
+                    console.error('Update multiplechoice status error ',error);
+                }
+            });
+        }
+        function promptDeletePost(id){
+            Swal.fire({
+                icon:'question',
+                title: `Are you sure you want to remove post no ${id} entries?`,
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                customClass:{
+                    confirmButton:'change-width-confirm-button',
+                    cancelButton:'change-width-confirm-button'
+                },
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon:'success',
+                        title:`Post Id ${id} removed`,
+                        customClass:{
+                            confirmButton:'change-width-confirm-button',
+                        },
+                    }).then((result)=>{
+                      if(result.isConfirmed){
+                        deletePost(id);
+                      }  
+                    });
+                }
+            })
+        }
+        function deletePost(id){
+             $.ajax({
+                type:'POST',
+                url:'/delete-multiplechoice-post',
+                data:{
+                    'id':id
+                },
+                success:function(response){
+                    if(response.success){
+                        location.reload();
+                    }
+                },
+                error:function(error){
+                    console.error('Delete post request error ',error);
+                }
+            });
         }
     </script>
 
