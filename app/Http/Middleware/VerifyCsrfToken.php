@@ -27,6 +27,13 @@ class VerifyCsrfToken extends Middleware
         '/update-backend-status',
         '/post-frontend',
         '/delete-backend-post',
-        '/update-backend-post'
+        '/update-backend-post',
+        '/delete-frontend-post',
+        '/update-frontend-post',
+        '/update-frontend-status',
+        '/post-multiplechoice',
+        '/update-multiplechoice-post',
+        '/delete-multiplechoice-post',
+        '/update-multiplechoice-status'
     ];
 }

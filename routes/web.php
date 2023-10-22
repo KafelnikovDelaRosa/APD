@@ -54,7 +54,16 @@ Route::get('/adminchallenges/multiplechoice',[AdminController::class,'adminMulti
 Route::get('/adminchallenges/frontend',[AdminController::class,'adminFrontend']);
 Route::get('/adminchallenges/backend',[AdminController::class,'adminBackend']);
 Route::get('/adminchallenges/multiplechoice/post',[AdminController::class,'multipleChoiceForm']);
+Route::post('/post-multiplechoice',[AdminController::class,'postMultipleChoice']);
+Route::post('/update-multiplechoice-post',[AdminController::class,'updateMultipleChoicePost']);
+Route::post('/delete-multiplechoice-post',[AdminController::class,'deleteMultipleChoicePost']);
+Route::post('/update-multiplechoice-status',[AdminController::class,'updateMultipleChoiceStatus']);
+Route::get('/adminchallenges/multiplechoice/editpost/{id}',[AdminController::class,'editMultipleChoiceForm']);
 Route::get('/adminchallenges/frontend/post',[AdminController::class,'frontEndForm']);
+Route::get('/adminchallenges/frontend/editpost/{id}',[AdminController::class,'editFrontEndForm']);
+Route::post('/delete-frontend-post',[AdminController::class,'deleteFrontEndPost']);
+Route::post('/update-frontend-post',[AdminController::class,'updateFrontEndPost']);
+Route::post('/update-frontend-status',[AdminController::class,'updateFrontEndStatus']);
 Route::post('/post-frontend',[AdminController::class,'postFrontEnd']);
 Route::get('/adminchallenges/backend/post',[AdminController::class,'backEndForm']);
 Route::get('/adminchallenges/backend/editpost/{id}',[AdminController::class,'editBackEndForm']);

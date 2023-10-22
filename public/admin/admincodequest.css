@@ -18,7 +18,7 @@ body {
 }
 
 .sidebar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
@@ -259,7 +259,7 @@ a:hover{
 .form-container{
     padding:1.2rem;
     display:flex;
-    width:calc(45rem - 250px);
+    width:calc(70rem - 250px);
     flex-direction:column;
 }
 input[type="text"],select{
@@ -268,4 +268,14 @@ input[type="text"],select{
 }
 .change-width-confirm-button{
     width:50%;
+}
+.question-container{
+    position:relative;
+    flex-direction:row;
+}
+.question-container .question-form{
+    margin-top:0.7em;
+    color:white;
+    padding:1rem;
+    background-color:#12171e;
 }
