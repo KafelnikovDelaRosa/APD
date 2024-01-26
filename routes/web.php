@@ -32,7 +32,7 @@ Route::get('profile', [MainController::class, 'profile']);
 Route::get('mpcq', [MainController::class, 'mpcq']);
 Route::get('fe', [MainController::class, 'fe']);
 Route::get('be', [MainController::class, 'be']);
-Route::post('updatePoints', [MCController::class, 'updatePoints']);
+Route::post('/updatePoints', [MCController::class, 'updatePoints']);
 
 Route::get('registersuccess',[SuccessController::class,'registersuccess']);
 

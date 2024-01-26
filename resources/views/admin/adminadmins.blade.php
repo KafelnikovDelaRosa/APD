@@ -108,7 +108,7 @@
                             <td>{{ $admin->firstname}}</td>
                             <td>{{ $admin->middlename}}</td>
                             <td>{{ $admin->lastname}}</td>
-                            <td><button onclick="promptDeleteUser({{$admin->studentid}})">Delete</button></td>
+                            <td><a onclick="promptDeleteUser({{$admin->id}})"><i class="fa-solid fa-trash"></i></a></td>
                         </tr>
                         @endforeach
                         </tbody>

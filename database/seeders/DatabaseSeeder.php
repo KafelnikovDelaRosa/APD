@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
                 'middlename'=>$faker->randomElement($middleName),
                 'yearlevel'=>$yearLevel,
                 'program'=>$faker->randomElement($program),
+                'points'=>0,
                 'password'=>bcrypt('password')
             ]);
         }

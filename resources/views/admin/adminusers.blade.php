@@ -112,7 +112,9 @@
                             <td>{{ $user['middlename']}}</td>
                             <td>{{ $user['lastname']}}</td>
                             <td>{{ is_null($user['points'])?0:$user['points']}}</td>
-                            <td><button onclick="promptDeleteUser({{$user['studentid']}})">Delete</button></td>
+                            <td>
+                                <a onclick="promptDeleteUser({{$user['studentid']}})"><i class="fa-solid fa-trash"></i></a>
+                            </td>
                         </tr>
                         @endforeach
                         </tbody>

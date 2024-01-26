@@ -21,7 +21,6 @@ class MCController extends Controller
             DB::table('users')
                 ->where('studentid', $user->studentid)
                 ->increment('points', $points);
-
             return response()->json([
                 "success" => true,
                 "message" => "Points updated successfully",

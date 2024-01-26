@@ -76,6 +76,7 @@ class RegisterAndLoginController extends Controller
             'lastname' => $data['lastname'],
             'yearlevel' => $data['yearlevel'],
             'program' => $data['program'],
+            'points' => 0,
             'password' => bcrypt($data['password']),
         ]);
     }

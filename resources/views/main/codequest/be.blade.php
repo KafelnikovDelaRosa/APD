@@ -172,7 +172,7 @@
         function saveTempProgram(fields){
             $.ajax({
                 type:"POST",
-                url:"https://e296-112-202-225-3.ngrok-free.app/save-code",
+                url:"http://localhost:3000/save-code",
                 data:JSON.stringify({
                     'content':fields.content,
                     'language':fields.language
@@ -193,16 +193,16 @@
             });
         }
         function runCode(language){
-             $.ajax({
+            $.ajax({
                 type:"POST",
-                url:"https://e296-112-202-225-3.ngrok-free.app/run-code",
+                url:"http://localhost:3000/run-code",
                 data:JSON.stringify({
                     'language':language
                 }),
                 contentType:'application/json',
                 success:function(response){
                     if(response.success){
-                        console.log(reponse);
+                        console.log(response);
                         consoleContainer.textContent=response.result;
                     }
                     else{
@@ -216,5 +216,5 @@
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  </body>
+    </body>
 </html>
